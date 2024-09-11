@@ -3,3 +3,12 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+.spinner {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  background-color: rgb(77, 247, 105);
+}

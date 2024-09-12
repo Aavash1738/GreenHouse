@@ -6,6 +6,7 @@ import ProtectedRoutes from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import { useSelector } from "react-redux";
 import Spinner from "./components/spinner";
+import Users from "./Pages/adminview/Users";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -21,6 +22,14 @@ function App() {
               element={
                 <ProtectedRoutes>
                   <HomePage />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/admin/users"
+              element={
+                <ProtectedRoutes>
+                  <Users />
                 </ProtectedRoutes>
               }
             />

@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
         <div className="layout">
           <div className="sidebar">
             <div className="logo">
-              <h4>GreenHouse Monitor</h4>
+              <h4>Greenhouse Console</h4>
               <hr></hr>
             </div>
             <div className="menu">

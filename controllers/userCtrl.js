@@ -53,7 +53,8 @@ const registerController = async (req, res) => {
 
 const authController = async (req, res) => {
   try {
-    const user = await userModel.findOne((_id = req.userID));
+    const user = await userModel.findById({ _id: req.body.userID });
+    user.password = undefined;
     if (!user) {
       return res.status(200).send({
         message: "user not found",
@@ -62,10 +63,7 @@ const authController = async (req, res) => {
     } else {
       res.status(200).send({
         success: true,
-        data: {
-          name: user.name,
-          email: user.email,
-        },
+        data: user,
       });
     }
   } catch (error) {

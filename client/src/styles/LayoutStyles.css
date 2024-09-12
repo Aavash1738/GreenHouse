@@ -80,3 +80,21 @@
   color: white;
   padding: 2px;
 }
+
+.header-content {
+  display: flex;
+  margin: 0 15px;
+  align-items: center;
+  justify-content: end;
+  height: 100%;
+}
+
+.header-content a {
+  color: #1c1d48;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.header-content .pin {
+  color: #1c1d48;
+}

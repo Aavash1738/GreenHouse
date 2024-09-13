@@ -33,6 +33,7 @@
   height: 85vh;
   box-shadow: 0 0 2px grey;
   background-color: white;
+  overflow-y: scroll;
 }
 
 .logo h4 {

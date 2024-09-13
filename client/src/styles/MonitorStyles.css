@@ -1,0 +1,34 @@
+.panel {
+  max-width: 80%;
+  margin: 0 auto;
+}
+div.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+#secondary {
+  display: flex;
+  flex-direction: row;
+  background-color: blue;
+  flex: 1;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+#container2 {
+  width: 45%;
+  align-self: center;
+  display: inline-block;
+}
+
+#container3 {
+  width: 45%;
+  align-self: center;
+  display: inline-block;
+}
+
+.gauge-charts {
+  display: flex;
+  max-width: 100%;
+}

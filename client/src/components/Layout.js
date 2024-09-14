@@ -23,7 +23,8 @@ const Layout = ({ children }) => {
         <div className="layout">
           <div className="sidebar">
             <div className="logo">
-              <h4>Greenhouse Console</h4>
+              <img src={require("./../logo.png")} alt="GreenSync Logo" />
+              <h4>GreenSync</h4>
               <hr></hr>
             </div>
             <div className="menu">

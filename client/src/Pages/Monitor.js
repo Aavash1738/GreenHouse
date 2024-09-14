@@ -7,6 +7,13 @@ import HighchartsGauge from "highcharts/modules/solid-gauge";
 import HighchartsMore from "highcharts/highcharts-more";
 import "./../styles/MonitorStyles.css";
 
+const main_color = "#f0efef";
+const back_color = "#228b22";
+const main_green = "#11FF11";
+const main_yellow = "#FFEE11";
+const main_red = "#FF1111";
+const main_blue = "#1111FF";
+
 HighchartsMore(Highcharts);
 HighchartsGauge(Highcharts);
 
@@ -19,17 +26,18 @@ const Monitor = () => {
 
   // Options for Highcharts
   const temperatureHumidityOptions = {
+    chart: { backgroundColor: main_color },
     title: { text: "Temperature and Humidity" },
     yAxis: { title: { text: "Value" } },
     xAxis: { categories: upArr },
     series: [
-      { name: "Humidity", data: humArr, color: "#1111FF" },
-      { name: "Temperature", data: tempArr, color: "#FF1111" },
+      { name: "Humidity", data: humArr, color: main_blue },
+      { name: "Temperature", data: tempArr, color: main_red },
     ],
   };
 
   const moistureOptions = {
-    chart: { type: "gauge" },
+    chart: { type: "gauge", backgroundColor: main_color },
     title: { text: "Soil Moisture" },
     pane: {
       startAngle: -150,
@@ -44,7 +52,7 @@ const Monitor = () => {
       min: 0,
       max: 100,
       minorTickInterval: 0,
-      tickColor: "#ffffff",
+      tickColor: main_color,
       tickLength: 40,
       tickPixelInterval: 60,
       tickWidth: 2,
@@ -59,21 +67,21 @@ const Monitor = () => {
         {
           from: 0,
           to: 36,
-          color: "#FF1111",
+          color: main_red,
           innerRadius: "87%",
           borderRadius: "50%",
         },
         {
           from: 35,
           to: 51,
-          color: "#FFEE11",
+          color: main_yellow,
           innerRadius: "87%",
           zIndex: 1,
         },
         {
           from: 50,
           to: 80,
-          color: "#11FF11",
+          color: main_green,
           innerRadius: "87%",
           zIndex: 1,
         },
@@ -104,7 +112,7 @@ const Monitor = () => {
   };
 
   const acidityOptions = {
-    chart: { type: "gauge" },
+    chart: { type: "gauge", backgroundColor: main_color },
     title: { text: "Soil Acidity" },
     pane: {
       startAngle: -150,
@@ -119,7 +127,7 @@ const Monitor = () => {
       min: 0,
       max: 100,
       minorTickInterval: 0,
-      tickColor: "#ffffff",
+      tickColor: main_color,
       tickLength: 40,
       tickPixelInterval: 60,
       tickWidth: 2,

@@ -1,7 +1,10 @@
+@import url(LayoutStyles.css);
+
 .panel {
   max-width: 80%;
   margin: 0 auto;
 }
+
 div.container {
   display: flex;
   justify-content: space-between;
@@ -10,12 +13,12 @@ div.container {
 #secondary {
   display: flex;
   flex-direction: row;
-  background-color: blue;
   flex: 1;
   justify-content: center;
   width: 100%;
   align-items: center;
 }
+
 #container2 {
   width: 45%;
   align-self: center;
@@ -31,4 +34,5 @@ div.container {
 .gauge-charts {
   display: flex;
   max-width: 100%;
+  background-color: var(--main_color);
 }

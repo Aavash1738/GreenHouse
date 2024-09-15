@@ -6,6 +6,7 @@ import HighchartsReact from "highcharts-react-official";
 import HighchartsGauge from "highcharts/modules/solid-gauge";
 import HighchartsMore from "highcharts/highcharts-more";
 import "./../styles/MonitorStyles.css";
+import { useSelector } from "react-redux";
 
 const main_color = "#f0efef";
 const back_color = "#228b22";
@@ -18,6 +19,7 @@ HighchartsMore(Highcharts);
 HighchartsGauge(Highcharts);
 
 const Monitor = () => {
+  const { user } = useSelector((state) => state.user);
   const [humArr, setHumArr] = useState([22, 56]);
   const [tempArr, setTempArr] = useState([10, 23]);
   const [upArr, setUpArr] = useState([]);
@@ -190,7 +192,9 @@ const Monitor = () => {
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        const response = await axios.get("https://yourapi.com/data"); // Replace with actual URL
+        const response = await axios.get(
+          `https://sbucket1738.s3.amazonaws.com/${user.name}/data`
+        ); // Replace with actual URL
         const { humidity, temperature, timestamps } = response.data;
 
         setHumArr((prev) => [...prev, Number(humidity)]);
@@ -198,8 +202,8 @@ const Monitor = () => {
         setUpArr((prev) => [...prev, Number(timestamps)]);
 
         // Update chart data
-        setMoistureData([Math.random() * 100]); // Replace with real data manipulation logic
-        setAcidityData([Math.random() * 100]); // Replace with real data manipulation logic
+        setMoistureData([Math.ceil(Math.random() * 60)]); // Replace with real data manipulation logic
+        setAcidityData([Math.ceil(Math.random() * 60)]); // Replace with real data manipulation logic
       } catch (error) {
         console.error("Error fetching data", error);
       }

@@ -52,6 +52,12 @@ i.fa-solid.fa-temperature-three-quarters.pin {
   background-color: var(--main_color);
   box-shadow: 0 0 2px grey;
   padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bodyfill {
+  flex: 1 1 0;
 }
 
 .logo {
@@ -135,4 +141,92 @@ i.fa-solid.fa-temperature-three-quarters.pin {
 
 #username {
   text-transform: capitalize;
+}
+
+.footer {
+  background-color: var(--main_color); /* Add your footer styling here */
+  text-align: center;
+  color: #1c1d48;
+  padding-top: 5px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  font-size: 0.9 rem;
+  border-top: 1px dotted #1c1d48;
+}
+
+.footer a:hover {
+  color: var(--sub_color);
+}
+
+.footer .fa-brands {
+  margin-right: 4px;
+}
+
+.footer a {
+  text-decoration: none;
+  color: #1c1d48;
+}
+
+.footer :visited {
+  color: #1c1d48;
+}
+
+h6 {
+  text-align: center;
+}
+
+/*card controller*/
+
+.card i {
+  font-size: 40px;
+  color: #28a745; /* You can change the color based on the theme */
+  margin-bottom: 10px;
+}
+
+.card h3 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+  color: #333;
+}
+
+.card p {
+  font-size: 24px;
+  color: #28a745;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between cards */
+  justify-content: space-around; /* Align cards evenly */
+  padding: 20px;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 200px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Card hover effect */
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Card title styling */
+.card h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Card content (e.g., data) styling */
+.card p {
+  font-size: 24px;
+  color: #28a745;
 }

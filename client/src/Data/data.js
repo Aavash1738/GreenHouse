@@ -35,7 +35,7 @@ export const userMenu = [
 export const adminMenu = [
   {
     name: "Home",
-    path: "/",
+    path: "/admin",
     icon: "fa-solid fa-house",
   },
   {

@@ -20,11 +20,11 @@ HighchartsGauge(Highcharts);
 
 const Monitor = () => {
   const { user } = useSelector((state) => state.user);
-  const [humArr, setHumArr] = useState([22, 56]);
-  const [tempArr, setTempArr] = useState([10, 23]);
+  const [humArr, setHumArr] = useState([]);
+  const [tempArr, setTempArr] = useState([]);
   const [upArr, setUpArr] = useState([]);
-  const [moistureData, setMoistureData] = useState([56]);
-  const [acidityData, setAcidityData] = useState([56]);
+  const [moistureData, setMoistureData] = useState([]);
+  const [acidityData, setAcidityData] = useState([]);
 
   // Options for Highcharts
   const temperatureHumidityOptions = {
@@ -192,9 +192,10 @@ const Monitor = () => {
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        const response = await axios.get(
-          `https://sbucket1738.s3.amazonaws.com/${user.name}/data`
-        ); // Replace with actual URL
+        const response = await axios
+          .get
+          //`https://sbucket1738.s3.amazonaws.com/${user.name}/data`
+          (); // Replace with actual URL
         const { humidity, temperature, timestamps } = response.data;
 
         setHumArr((prev) => [...prev, Number(humidity)]);

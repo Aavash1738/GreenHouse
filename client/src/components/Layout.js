@@ -52,7 +52,15 @@ const Layout = ({ children }) => {
                 <Link to="/profile">{user?.name}</Link>
               </div>
             </div>
-            <div className="body">{children}</div>
+            <div className="body">
+              <div className="bodyfill">{children}</div>
+              <div className="footer">
+                <Link to="https://github.com/Aavash1738/GreenHouse">
+                  <i class="fa-brands fa-github"></i>
+                  View code
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -19,6 +19,16 @@ export const userMenu = [
     path: "/profile",
     icon: "fa-solid fa-user",
   },
+  {
+    name: "Weather",
+    path: "/weather",
+    icon: "fa-solid fa-cloud",
+  },
+  {
+    name: "Settings",
+    path: "/settings",
+    icon: "fa-solid fa-gear",
+  },
 ];
 
 //admin data
@@ -37,5 +47,15 @@ export const adminMenu = [
     name: "Profile",
     path: "/profile",
     icon: "fa-solid fa-user",
+  },
+  {
+    name: "Weather",
+    path: "/weather",
+    icon: "fa-solid fa-cloud",
+  },
+  {
+    name: "Settings",
+    path: "/settings",
+    icon: "fa-solid fa-gear",
   },
 ];

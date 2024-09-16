@@ -202,8 +202,8 @@ const Monitor = () => {
         setUpArr((prev) => [...prev, Number(timestamps)]);
 
         // Update chart data
-        setMoistureData([Math.ceil(Math.random() * 60)]); // Replace with real data manipulation logic
-        setAcidityData([Math.ceil(Math.random() * 60)]); // Replace with real data manipulation logic
+        setMoistureData([Math.ceil(Math.random() * (60 - 40))]); // Replace with real data manipulation logic
+        setAcidityData([Math.ceil(Math.random() * (60 - 40))]); // Replace with real data manipulation logic
       } catch (error) {
         console.error("Error fetching data", error);
       }

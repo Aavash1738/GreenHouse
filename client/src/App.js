@@ -8,6 +8,7 @@ import PublicRoute from "./components/PublicRoute";
 import { useSelector } from "react-redux";
 import Spinner from "./components/spinner";
 import Users from "./Pages/adminview/Users";
+import Weather from "./Pages/Weather";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -23,6 +24,14 @@ function App() {
               element={
                 <ProtectedRoutes>
                   <HomePage />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/weather"
+              element={
+                <ProtectedRoutes>
+                  <Weather />
                 </ProtectedRoutes>
               }
             />

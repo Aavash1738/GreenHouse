@@ -1,0 +1,66 @@
+/* src/components/Weather.css */
+.weather-container {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 5px;
+  text-align: center;
+}
+
+.weather-container h2 {
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #212529;
+}
+
+.weather-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between cards */
+  justify-content: space-around; /* Align cards evenly */
+  padding: 20px;
+}
+
+.weather-details {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.location h3 {
+  font-size: 24px;
+  color: #212529;
+  margin-bottom: 10px;
+}
+
+.temperature,
+.humidity,
+.wind-speed,
+.condition {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 200px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.temperature:hover,
+.humidity:hover,
+.wind-speed:hover,
+.condition:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+  font-size: 25px;
+  color: #28a745; /* You can change the color based on the theme */
+  margin-bottom: 10px;
+}
+
+.value {
+  font-size: 24px;
+  color: #28a745;
+}

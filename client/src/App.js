@@ -8,6 +8,7 @@ import PublicRoute from "./components/PublicRoute";
 import { useSelector } from "react-redux";
 import Spinner from "./components/spinner";
 import Users from "./Pages/adminview/Users";
+import AdminHomePage from "./Pages/adminview/AdminHomePage";
 import Weather from "./Pages/Weather";
 
 function App() {
@@ -24,6 +25,14 @@ function App() {
               element={
                 <ProtectedRoutes>
                   <HomePage />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoutes>
+                  <AdminHomePage />
                 </ProtectedRoutes>
               }
             />

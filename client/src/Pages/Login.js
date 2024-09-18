@@ -19,8 +19,14 @@ const Login = () => {
       dispatch(hideLoading());
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("isAdmin", res.data.isAdmin);
         message.success("Login Successfuly");
-        navigate("/");
+        if (res.data.isAdmin) {
+          console.log("here");
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
       } else {
         message.error(res.data.message);
       }

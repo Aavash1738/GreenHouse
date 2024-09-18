@@ -3,11 +3,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./../styles/WeatherStyles.css";
 import Layout from "./../components/Layout";
-import { showLoading, hideLoading } from "../redux/features/alertSlice";
-import { useDispatch } from "react-redux";
 
 const Weather = () => {
-  const dispatch = useDispatch();
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

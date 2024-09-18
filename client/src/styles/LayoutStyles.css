@@ -189,6 +189,8 @@ h6 {
   gap: 20px; /* Space between cards */
   justify-content: space-around; /* Align cards evenly */
   padding: 20px;
+  max-width: 70%;
+  margin: 0 auto;
 }
 
 .card {

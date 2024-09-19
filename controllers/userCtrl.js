@@ -20,14 +20,12 @@ const loginController = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
-    res
-      .status(200)
-      .send({
-        message: "Login successful",
-        success: true,
-        token,
-        isAdmin: user.isAdmin,
-      });
+    res.status(200).send({
+      message: "Login successful",
+      success: true,
+      token,
+      isAdmin: user.isAdmin,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Error in login control" });
@@ -41,6 +39,13 @@ const registerController = async (req, res) => {
       return res
         .status(200)
         .send({ message: `User already exists`, success: false });
+    }
+    const existingUsername = await userModel.findOne({ name: req.body.name });
+    if (existingUsername) {
+      return res.status(200).send({
+        message: `Username already taken, please choose another.`,
+        success: false,
+      });
     }
     const password = req.body.password;
     const salt = await bcrypt.genSalt(10);

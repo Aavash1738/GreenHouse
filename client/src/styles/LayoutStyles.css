@@ -86,18 +86,18 @@ i.fa-solid.fa-temperature-three-quarters.pin {
 }
 
 .menu-item {
-  margin-top: 15px;
+  margin-top: 18px;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 8px;
-  padding: 5px 0;
+  padding: 5px 12px;
 }
 
 .menu-item a {
   color: #212529;
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
 .pin {
@@ -189,7 +189,7 @@ h6 {
   gap: 20px; /* Space between cards */
   justify-content: space-around; /* Align cards evenly */
   padding: 20px;
-  max-width: 70%;
+  max-width: 100%;
   margin: 0 auto;
 }
 

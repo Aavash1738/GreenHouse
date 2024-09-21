@@ -22,7 +22,6 @@ const Login = () => {
         localStorage.setItem("isAdmin", res.data.isAdmin);
         message.success("Login Successfuly");
         if (res.data.isAdmin) {
-          console.log("here");
           navigate("/admin");
         } else {
           navigate("/");

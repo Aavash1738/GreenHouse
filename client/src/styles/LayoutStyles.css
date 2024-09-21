@@ -124,7 +124,23 @@ i.fa-solid.fa-temperature-three-quarters.pin {
   display: flex;
   margin: 0 25px;
   align-items: center;
-  justify-content: end;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.header-content .right {
+  display: flex;
+  margin: 0 25px;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.header-content .left {
+  display: flex;
+  margin: 0 25px;
+  align-items: center;
+  justify-content: center;
   height: 100%;
 }
 
@@ -137,6 +153,12 @@ i.fa-solid.fa-temperature-three-quarters.pin {
 .header-content .pin {
   color: #1c1d48;
   margin-right: 5px;
+}
+
+.header-content .left a {
+  color: #1c1d48;
+  text-decoration: none;
+  text-transform: capitalize;
 }
 
 #username {
@@ -207,6 +229,10 @@ h6 {
 .card:hover {
   transform: translateY(-10px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+h3 {
+  margin: 5px auto;
 }
 
 /* Card title styling */

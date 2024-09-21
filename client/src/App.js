@@ -10,6 +10,7 @@ import Spinner from "./components/spinner";
 import Users from "./Pages/adminview/Users";
 import AdminHomePage from "./Pages/adminview/AdminHomePage";
 import Weather from "./Pages/Weather";
+import Settings from "./Pages/Settings";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -73,6 +74,14 @@ function App() {
               element={
                 <ProtectedRoutes>
                   <Monitor />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoutes>
+                  <Settings />
                 </ProtectedRoutes>
               }
             />

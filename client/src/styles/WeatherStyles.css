@@ -1,8 +1,8 @@
 /* src/components/Weather.css */
 .weather-container {
   max-width: 500px;
-  margin: 20px auto;
-  padding: 5px;
+  margin: 5px auto;
+  padding: 0 5px;
   text-align: center;
 }
 

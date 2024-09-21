@@ -48,8 +48,14 @@ const Layout = ({ children }) => {
           <div className="content">
             <div className="header">
               <div className="header-content">
-                <i className="fa-solid fa-envelope pin"></i>
-                <Link to="/profile">{user?.name}</Link>
+                <div className="left">
+                  <i class="fa-solid fa-wheat-awn pin"></i>
+                  <Link to="/settings">{user?.plant}</Link>
+                </div>
+                <div className="right">
+                  <i className="fa-solid fa-envelope pin"></i>
+                  <Link to="/profile">{user?.name}</Link>
+                </div>
               </div>
             </div>
             <div className="body">

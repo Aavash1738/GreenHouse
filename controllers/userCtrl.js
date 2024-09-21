@@ -88,4 +88,29 @@ const authController = async (req, res) => {
   }
 };
 
-module.exports = { loginController, registerController, authController };
+const updateController = async (req, res) => {
+  try {
+    const { plant, userId } = req.body;
+
+    const updatedUser = await userModel.findByIdAndUpdate(
+      userId,
+      { plant: plant },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).send({ success: true, data: updatedUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "auth error", success: false, error });
+  }
+};
+
+module.exports = {
+  loginController,
+  registerController,
+  authController,
+  updateController,
+};

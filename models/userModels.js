@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  plant: {
+    type: String,
+    default: "Cucumber",
+  },
 });
 
 const userModel = mongoose.model("users", userSchema);

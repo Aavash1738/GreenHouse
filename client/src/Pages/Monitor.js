@@ -211,7 +211,7 @@ const Monitor = () => {
     };
 
     fetchWeatherData();
-    const intervalId = setInterval(fetchWeatherData, 3000); // Polling every 3 seconds
+    const intervalId = setInterval(fetchWeatherData, 10000); // Polling every 3 seconds
     return () => clearInterval(intervalId);
   }, []);
 

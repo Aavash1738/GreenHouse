@@ -22,7 +22,7 @@ const Monitor = () => {
   const { user } = useSelector((state) => state.user);
   const [humArr, setHumArr] = useState([]);
   const [tempArr, setTempArr] = useState([]);
-  const [upArr, setUpArr] = useState([]);
+  const [timeArr, setTimeArr] = useState([]);
   const [moistureData, setMoistureData] = useState([]);
   const [acidityData, setAcidityData] = useState([]);
 
@@ -31,7 +31,7 @@ const Monitor = () => {
     chart: { backgroundColor: main_color },
     title: { text: "Temperature and Humidity" },
     yAxis: { title: { text: "Value" } },
-    xAxis: { categories: upArr },
+    xAxis: { categories: timeArr },
     series: [
       { name: "Humidity", data: humArr, color: main_blue },
       { name: "Temperature", data: tempArr, color: main_red },
@@ -198,7 +198,12 @@ const Monitor = () => {
 
         setHumArr((prev) => [...prev, Number(humidity)]);
         setTempArr((prev) => [...prev, Number(temperature)]);
-        setUpArr((prev) => [...prev, Number(timestamps)]);
+
+        const date = new Date(timestamps);
+        const setup =
+          date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        console.log(setup);
+        setTimeArr((prev) => [...prev, String(setup)]);
 
         // Update chart data
         setMoistureData([Math.ceil(Math.random() * (60 - 40))]);

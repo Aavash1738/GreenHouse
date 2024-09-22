@@ -188,14 +188,12 @@ const Monitor = () => {
     ],
   };
 
-  // Fetch data and update charts
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        const response = await axios
-          .get
-          //`https://sbucket1738.s3.amazonaws.com/${user.name}/data`
-          (); // Replace with actual URL
+        const response = await axios.get(
+          `https://sbucket1738.s3.amazonaws.com/${user?.name}/data`
+        ); // Replace with actual URL
         const { humidity, temperature, timestamps } = response.data;
 
         setHumArr((prev) => [...prev, Number(humidity)]);
@@ -203,15 +201,15 @@ const Monitor = () => {
         setUpArr((prev) => [...prev, Number(timestamps)]);
 
         // Update chart data
-        setMoistureData([Math.ceil(Math.random() * (60 - 40))]); // Replace with real data manipulation logic
-        setAcidityData([Math.ceil(Math.random() * (60 - 40))]); // Replace with real data manipulation logic
+        setMoistureData([Math.ceil(Math.random() * (60 - 40))]);
+        setAcidityData([Math.ceil(Math.random() * (60 - 40))]);
       } catch (error) {
         console.error("Error fetching data", error);
       }
     };
 
     fetchWeatherData();
-    const intervalId = setInterval(fetchWeatherData, 10000); // Polling every 3 seconds
+    const intervalId = setInterval(fetchWeatherData, 10000); // Polling every 10 seconds
     return () => clearInterval(intervalId);
   }, []);
 

@@ -215,6 +215,10 @@ h6 {
   margin: 0 auto;
 }
 
+h5 {
+  text-align: center;
+}
+
 .card {
   background-color: #fff;
   border-radius: 10px;

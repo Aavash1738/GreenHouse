@@ -1,15 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Layout from "./../components/Layout";
 import { useSelector } from "react-redux";
 
 const HomePage = () => {
+  // Define state for temperature, humidity, and timestamps
+  const [temperature, setTemperature] = useState(null);
+  const [humidity, setHumidity] = useState(null);
+  const [timestamps, setTimestamps] = useState(null);
+  const [time, setTime] = useState(null);
+
   const { user } = useSelector((state) => state.user);
-  //user data
+
+  // Fetch user data
   const getUserData = async () => {
     try {
-      const res = await axios.post(
-        "/api//v1/user/getUserData",
+      await axios.post(
+        "/api/v1/user/getUserData",
         {},
         {
           headers: {
@@ -21,9 +28,36 @@ const HomePage = () => {
       console.log(error);
     }
   };
+
   useEffect(() => {
+    const getWeather = async () => {
+      try {
+        const response = await axios.get(
+          `https://sbucket1738.s3.amazonaws.com/${user.name}/data`
+        );
+        // Set temperature, humidity, and timestamps state based on API response
+        const data = response.data;
+        const date = new Date(data.timestamps);
+        const setup =
+          date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        setTime(setup);
+        setTemperature(data.temperature);
+        setHumidity(data.humidity);
+        setTimestamps(data.timestamps);
+        console.log("value updated");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     getUserData();
-  }, []);
+    getWeather();
+
+    const timer = setTimeout(() => {}, 10000);
+
+    // Cleanup function
+    return () => clearTimeout(timer);
+  }, [user?.name]);
 
   return (
     <Layout>
@@ -31,66 +65,62 @@ const HomePage = () => {
         Hello <span id="username">{user?.name}</span>. Welcome to your GreenSync
         console.
       </h3>
+      <h6>Updated on {time}</h6>
       <h6>
         Monitor, control and optimize your greenhouse environment from anywhere.
       </h6>
-      <div class="card-container">
-        <div class="card">
-          <i class="fas fa-thermometer-half"></i>
+
+      <div className="card-container">
+        <div className="card">
+          <i className="fas fa-thermometer-half"></i>
           <h3>Temperature</h3>
-          <p>24°C</p>
+          <p>{temperature !== null ? `${temperature} °C` : "Loading..."}</p>
         </div>
 
-        <div class="card">
-          <i class="fas fa-cloud-showers-heavy"></i>
+        <div className="card">
+          <i className="fas fa-cloud-showers-heavy"></i>
           <h3>Humidity</h3>
-          <p>65%</p>
+          <p>{humidity !== null ? `${humidity} %` : "Loading..."}</p>
         </div>
 
-        <div class="card">
-          <i class="fas fa-sun"></i>
+        {/* Other cards remain unchanged */}
+        <div className="card">
+          <i className="fas fa-sun"></i>
           <h3>Light Level</h3>
           <p>750 lx</p>
         </div>
-
-        <div class="card">
-          <i class="fa-solid fa-droplet"></i>
+        <div className="card">
+          <i className="fa-solid fa-droplet"></i>
           <h3>Soil Moisture</h3>
           <p>30%</p>
         </div>
-
-        <div class="card">
-          <i class="fa-solid fa-seedling"></i>
+        <div className="card">
+          <i className="fa-solid fa-seedling"></i>
           <h3>NPK sensor</h3>
           <p>Closed</p>
         </div>
-
-        <div class="card">
-          <i class="fas fa-water"></i>
+        <div className="card">
+          <i className="fas fa-water"></i>
           <h3>Watering Status</h3>
           <p>Active</p>
         </div>
-
-        <div class="card">
-          <i class="fas fa-lightbulb"></i>
+        <div className="card">
+          <i className="fas fa-lightbulb"></i>
           <h3>Light On/Off</h3>
           <p>On</p>
         </div>
-
-        <div class="card">
-          <i class="fas fa-fire-alt"></i>
+        <div className="card">
+          <i className="fas fa-fire-alt"></i>
           <h3>Heater</h3>
           <p>Off</p>
         </div>
-
-        <div class="card">
-          <i class="fas fa-wind"></i>
+        <div className="card">
+          <i className="fas fa-wind"></i>
           <h3>Fan</h3>
           <p>On</p>
         </div>
-
-        <div class="card">
-          <i class="fa-solid fa-spray-can"></i>
+        <div className="card">
+          <i className="fa-solid fa-spray-can"></i>
           <h3>Humidifier</h3>
           <p>Active</p>
         </div>

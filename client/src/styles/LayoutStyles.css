@@ -91,7 +91,7 @@ i.fa-solid.fa-temperature-three-quarters.pin {
   flex-direction: row;
   align-items: center;
   gap: 8px;
-  padding: 5px 12px;
+  padding: 5px 14px;
 }
 
 .menu-item a {
@@ -117,7 +117,11 @@ i.fa-solid.fa-temperature-three-quarters.pin {
 
 .active a {
   color: white;
-  padding: 1px;
+  padding: 0 3px;
+}
+
+.active i {
+  padding: 0 28px;
 }
 
 .header-content {

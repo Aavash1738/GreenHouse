@@ -33,8 +33,10 @@ const Layout = ({ children }) => {
                 return (
                   <>
                     <div className={`menu-item ${isActive && "active"}`}>
-                      <i className={`${menu.icon} pin`}></i>
-                      <Link to={menu.path}>{menu.name}</Link>
+                      <Link to={menu.path}>
+                        <i className={`${menu.icon} pin`}></i>
+                        {menu.name}
+                      </Link>
                     </div>
                   </>
                 );

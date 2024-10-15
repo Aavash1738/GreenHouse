@@ -62,7 +62,7 @@ const Weather = () => {
             <div className="weather-details">
               <div className="temperature">
                 <i class="fa-solid fa-temperature-low icon"></i>
-                <h3>Temperature</h3>
+                <h3>Temp</h3>
                 <span className="value">{weatherData.current.temp_c} °C</span>
               </div>
 

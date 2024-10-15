@@ -6,8 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d build",
     "server": "nodemon server.js",
     "client": "npm start --prefix ./client ",
     "dev": "concurrently \"npm run server\" \"npm run client\""
@@ -27,8 +25,5 @@
     "nodemon": "^3.1.4",
     "react-gauge-chart": "^0.5.1",
     "react-router-dom": "^6.26.1"
-  },
-  "devDependencies": {
-    "gh-pages": "^6.2.0"
   }
 }

@@ -10,11 +10,6 @@ export const userMenu = [
     icon: "fa-solid fa-chart-simple",
   },
   {
-    name: "Controllers",
-    path: "/controllers",
-    icon: "fa-solid fa-temperature-three-quarters",
-  },
-  {
     name: "Profile",
     path: "/profile",
     icon: "fa-solid fa-user",

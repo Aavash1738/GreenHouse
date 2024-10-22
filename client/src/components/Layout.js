@@ -55,7 +55,7 @@ const Layout = ({ children }) => {
                   <Link to="/settings">{user?.plant}</Link>
                 </div>
                 <div className="right">
-                  <i className="fa-solid fa-envelope pin"></i>
+                  <i className="fa-solid fa-bell pin"></i>
                   <Link to="/profile">{user?.name}</Link>
                 </div>
               </div>

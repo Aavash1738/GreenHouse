@@ -23,8 +23,10 @@ const Monitor = () => {
   const [humArr, setHumArr] = useState([]);
   const [tempArr, setTempArr] = useState([]);
   const [timeArr, setTimeArr] = useState([]);
-  const [moistureData, setMoistureData] = useState([]);
-  const [acidityData, setAcidityData] = useState([]);
+  const [moistArr, setMoistArr] = useState([]);
+  const [acidityArr, setAcidityArr] = useState([]);
+  const [lightArr, setLightArr] = useState([]);
+  let isHeater, isWater, isFan, isVents, isLights;
 
   // Options for Highcharts
   const temperatureHumidityOptions = {
@@ -99,7 +101,7 @@ const Monitor = () => {
     series: [
       {
         name: "Moisture",
-        data: moistureData,
+        data: moistArr,
         dataLabels: {
           borderWidth: 1,
           style: {
@@ -174,7 +176,7 @@ const Monitor = () => {
     series: [
       {
         name: "Soil Acidity",
-        data: acidityData,
+        data: acidityArr,
         dataLabels: {
           borderWidth: 1,
           style: {
@@ -194,20 +196,29 @@ const Monitor = () => {
         const response = await axios.get(
           `https://sbucket1738.s3.amazonaws.com/${user?.name}/data`
         ); // Replace with actual URL
-        const { humidity, temperature, timestamps } = response.data;
-
+        let { humidity, temperature, timestamps } = response.data;
+        /*{ humidity, temperature, acidity, moisture, light, vents, heater, fan, water, lights} = response.data;*/
         setHumArr((prev) => [...prev, Number(humidity)]);
         setTempArr((prev) => [...prev, Number(temperature)]);
+        //setMoistArr((prev) => [...prev, Number(moisture)]);
+        //setAcidityArr((prev) => [...prev, Number(acidity)]);
+        //setLightArr((prev) => [...prev, Number(light)]);
 
         const date = new Date(timestamps);
         const setup =
           date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         console.log(setup);
         setTimeArr((prev) => [...prev, String(setup)]);
-
+        isHeater = true;
+        let ele = document.getElementsByClassName("heater")[0];
+        if (isHeater) {
+          ele.classList.add("act-heater");
+        } else if (!isHeater && ele.classList.contains("act")) {
+          ele.classList.remove("act-heater");
+        }
         // Update chart data
-        setMoistureData([Math.ceil(Math.random() * (60 - 40))]);
-        setAcidityData([Math.ceil(Math.random() * (60 - 40))]);
+        setMoistArr([Math.ceil(Math.random() * (60 - 40))]);
+        setAcidityArr([Math.ceil(Math.random() * (60 - 40))]);
       } catch (error) {
         console.error("Error fetching data", error);
       }
@@ -221,6 +232,13 @@ const Monitor = () => {
   return (
     <Layout>
       <div className="greenhouse-monitor">
+        <div className="actuator-panel">
+          <i class="fa-solid fa-fire heater pin"></i>
+          <i class="fa-solid fa-droplet water pin"></i>
+          <i class="fa-solid fa-fan fan pin"></i>
+          <i class="fa-solid fa-wind vents pin"></i>
+          <i class="fa-regular fa-lightbulb pin"></i>
+        </div>
         <div className="panel panel-info">
           <div className="panel-body">
             <HighchartsReact

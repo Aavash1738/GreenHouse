@@ -36,3 +36,26 @@ div.container {
   max-width: 100%;
   background-color: var(--main_color);
 }
+
+.actuator-panel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actuator-panel > .act-heater,
+.actuator-panel > .act-lights {
+  color: orangered;
+}
+
+.actuator-panel > .act-water,
+.actuator-panel > .act-vent,
+.actuator-panel > .act-fan {
+  color: turquoise;
+}
+
+.actuator-panel > i {
+  font-size: 2rem;
+  padding: 15px;
+}

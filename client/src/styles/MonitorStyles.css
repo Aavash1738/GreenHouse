@@ -41,21 +41,31 @@ div.container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+  margin-bottom: 2rem;
 }
 
-.actuator-panel > .act-heater,
-.actuator-panel > .act-lights {
+.actuator-panel > .act-heater {
   color: orangered;
 }
 
-.actuator-panel > .act-water,
-.actuator-panel > .act-vent,
-.actuator-panel > .act-fan {
+.actuator-panel > .act-lights {
+  color: rgb(239, 213, 16);
+}
+
+.actuator-panel > .act-vents {
   color: turquoise;
 }
 
+.actuator-panel > .act-fan {
+  color: rgb(64, 131, 224);
+}
+
+.actuator-panel > .act-water {
+  color: rgb(26, 26, 121);
+}
+
 .actuator-panel > i {
-  font-size: 2rem;
+  font-size: 3rem;
   padding: 15px;
 }

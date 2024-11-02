@@ -26,13 +26,41 @@ const Monitor = () => {
   const [moistArr, setMoistArr] = useState([]);
   const [acidityArr, setAcidityArr] = useState([]);
   const [lightArr, setLightArr] = useState([]);
-  let isHeater, isWater, isFan, isVents, isLights;
+  const [actuator, setActuator] = useState({
+    heater: true,
+    water: true,
+    fan: true,
+    vents: true,
+    lights: true,
+  });
 
-  // Options for Highcharts
   const temperatureHumidityOptions = {
-    chart: { backgroundColor: main_color },
+    chart: {
+      backgroundColor: main_color,
+    },
     title: { text: "Temperature and Humidity" },
-    yAxis: { title: { text: "Value" } },
+    yAxis: {
+      max: 100,
+      min: 0,
+      gridLineColor: "rgba(25, 127, 7, 0.2)",
+      gridLineWidth: 0.8,
+      gridLineDashStyle: "Dash",
+      tickInterval: 20,
+      title: { text: "Value" },
+      plotBands: [
+        {
+          from: 60,
+          to: 75,
+          color: "rgba(126, 126, 255, 0.3)", // Semi-transparent blue
+        },
+        {
+          from: 21, // Start of the colored section
+          to: 13, // End of the colored section
+          color: "rgba(255, 126, 126, 0.3)", // Semi-transparent green
+        },
+        ,
+      ],
+    },
     xAxis: { categories: timeArr },
     series: [
       { name: "Humidity", data: humArr, color: main_blue },
@@ -191,34 +219,51 @@ const Monitor = () => {
   };
 
   useEffect(() => {
+    const keys = Object.keys(actuator);
+    keys.forEach((value) => {
+      let ele = document.getElementsByClassName(value)[0];
+      if (actuator[value]) {
+        ele.classList.add(`act-${value}`);
+      } else {
+        ele.classList.remove(`act-${value}`);
+      }
+    });
+  }, [actuator]); // Runs whenever actuator.heater changes
+
+  useEffect(() => {
     const fetchWeatherData = async () => {
       try {
         const response = await axios.get(
           `https://sbucket1738.s3.amazonaws.com/${user?.name}/data`
-        ); // Replace with actual URL
-        let { humidity, temperature, timestamps } = response.data;
-        /*{ humidity, temperature, acidity, moisture, light, vents, heater, fan, water, lights} = response.data;*/
-        setHumArr((prev) => [...prev, Number(humidity)]);
-        setTempArr((prev) => [...prev, Number(temperature)]);
-        //setMoistArr((prev) => [...prev, Number(moisture)]);
-        //setAcidityArr((prev) => [...prev, Number(acidity)]);
-        //setLightArr((prev) => [...prev, Number(light)]);
+        );
 
+        let { humidity, temperature, timestamps } = response.data;
+        setHumArr((prevData) => {
+          const updatedData = [...prevData, Number(humidity)];
+          return updatedData.slice(-8);
+        });
+        setTempArr((prevData) => {
+          const updatedData = [...prevData, Number(temperature)];
+          return updatedData.slice(-8);
+        });
+        setMoistArr([Math.ceil(Math.random() * (60 - 40))]);
+        setAcidityArr([Math.ceil(Math.random() * (60 - 40))]);
+
+        // Assuming response.data contains properties for actuator states
+        // const { humidity, temperature, acidity, moisture, light, heater, water, fan, vents, lights } =
+        //   response.data;
+        // setActuator((prevState) => ({
+        //   ...prevState,
+        //   heater: heater,
+        //   water: water,
+        //   fan: fan,
+        //   vents: vents,
+        //   lights: lights,
+        // }));
         const date = new Date(timestamps);
         const setup =
           date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-        console.log(setup);
         setTimeArr((prev) => [...prev, String(setup)]);
-        isHeater = true;
-        let ele = document.getElementsByClassName("heater")[0];
-        if (isHeater) {
-          ele.classList.add("act-heater");
-        } else if (!isHeater && ele.classList.contains("act")) {
-          ele.classList.remove("act-heater");
-        }
-        // Update chart data
-        setMoistArr([Math.ceil(Math.random() * (60 - 40))]);
-        setAcidityArr([Math.ceil(Math.random() * (60 - 40))]);
       } catch (error) {
         console.error("Error fetching data", error);
       }
@@ -237,7 +282,7 @@ const Monitor = () => {
           <i class="fa-solid fa-droplet water pin"></i>
           <i class="fa-solid fa-fan fan pin"></i>
           <i class="fa-solid fa-wind vents pin"></i>
-          <i class="fa-regular fa-lightbulb pin"></i>
+          <i class="fa-regular fa-lightbulb lights pin"></i>
         </div>
         <div className="panel panel-info">
           <div className="panel-body">

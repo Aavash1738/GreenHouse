@@ -7,6 +7,8 @@ import HighchartsGauge from "highcharts/modules/solid-gauge";
 import HighchartsMore from "highcharts/highcharts-more";
 import "./../styles/MonitorStyles.css";
 import { useSelector } from "react-redux";
+import DataTable from "../components/Table";
+import _ from "lodash";
 
 const main_color = "#f0efef";
 const back_color = "#228b22";
@@ -20,6 +22,9 @@ HighchartsGauge(Highcharts);
 
 const Monitor = () => {
   const { user } = useSelector((state) => state.user);
+  const [tableData, setTableData] = useState(
+    JSON.parse(localStorage.getItem("tableData")) || []
+  );
   const [humArr, setHumArr] = useState([]);
   const [tempArr, setTempArr] = useState([]);
   const [timeArr, setTimeArr] = useState([]);
@@ -129,7 +134,7 @@ const Monitor = () => {
     series: [
       {
         name: "Moisture",
-        data: moistArr,
+        data: [moistArr[0]],
         dataLabels: {
           borderWidth: 1,
           style: {
@@ -204,7 +209,7 @@ const Monitor = () => {
     series: [
       {
         name: "Soil Acidity",
-        data: acidityArr,
+        data: [acidityArr[0]],
         dataLabels: {
           borderWidth: 1,
           style: {
@@ -246,8 +251,20 @@ const Monitor = () => {
           const updatedData = [...prevData, Number(temperature)];
           return updatedData.slice(-8);
         });
-        setMoistArr([Math.ceil(Math.random() * (60 - 40))]);
-        setAcidityArr([Math.ceil(Math.random() * (60 - 40))]);
+        setMoistArr((prevData) => {
+          const updatedData = [
+            Math.ceil(Math.random() * (60 - 40)),
+            ...prevData,
+          ];
+          return updatedData.slice(-8);
+        });
+        setAcidityArr((prevData) => {
+          const updatedData = [
+            Math.ceil(Math.random() * (60 - 40)),
+            ...prevData,
+          ];
+          return updatedData.slice(-8);
+        });
 
         // Assuming response.data contains properties for actuator states
         // const { humidity, temperature, acidity, moisture, light, heater, water, fan, vents, lights } =
@@ -273,6 +290,45 @@ const Monitor = () => {
     const intervalId = setInterval(fetchWeatherData, 10000); // Polling every 10 seconds
     return () => clearInterval(intervalId);
   }, []);
+
+  useEffect(() => {
+    let tempData = [_.mean(tempArr), _.max(tempArr), _.min(tempArr)];
+    let moistData = [_.mean(moistArr), _.max(moistArr), _.min(moistArr)];
+    let humData = [_.mean(humArr), _.max(humArr), _.min(humArr)];
+    let acidityData = [
+      _.mean(acidityArr),
+      _.max(acidityArr),
+      _.min(acidityArr),
+    ];
+    setTableData([
+      {
+        Parameter: "Temperature",
+        Average: tempData[0],
+        Maximum: tempData[1],
+        Minimum: tempData[2],
+      },
+      {
+        Parameter: "Humidity",
+        Average: humData[0],
+        Maximum: humData[1],
+        Minimum: humData[2],
+      },
+      {
+        Parameter: "Moisture",
+        Average: moistData[0],
+        Maximum: moistData[1],
+        Minimum: moistData[2],
+      },
+      {
+        Parameter: "Acidity",
+        Average: acidityData[0],
+        Maximum: acidityData[1],
+        Minimum: acidityData[2],
+      },
+    ]);
+
+    localStorage.setItem("tableData", JSON.stringify(tableData));
+  }, [tempArr, humArr, moistArr]);
 
   return (
     <Layout>
@@ -301,6 +357,9 @@ const Monitor = () => {
               />
             </div>
           </div>
+        </div>
+        <div className="stats">
+          {tableData.length > 0 && <DataTable data={tableData} />}
         </div>
       </div>
     </Layout>

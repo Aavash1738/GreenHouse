@@ -43,7 +43,6 @@ const HomePage = () => {
         setTemperature(data.temperature);
         setHumidity(data.humidity);
         setTimestamps(data.timestamps);
-        console.log("value updated");
       } catch (error) {
         console.log(error);
       }

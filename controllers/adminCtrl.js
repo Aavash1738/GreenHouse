@@ -20,7 +20,6 @@ const getAllUsersController = async (req, res) => {
 
 const deleteUserController = async (req, res) => {
   const { userId } = req.body;
-  console.log("User id to delete is ", userId);
   try {
     const result = await userModel.deleteOne({ _id: userId });
     if (result.deletedCount > 0) {

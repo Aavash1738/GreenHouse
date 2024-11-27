@@ -39,7 +39,6 @@ const Users = () => {
           },
         }
       );
-      console.log("response", res.data);
       if (res.data.success) {
         setUsers(res.data.data);
         alert("User deleted successfully");

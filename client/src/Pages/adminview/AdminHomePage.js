@@ -4,7 +4,6 @@ import Layout from "./../../components/Layout";
 import { useSelector } from "react-redux";
 
 const AdminHomePage = () => {
-  console.log("We are here");
   const { user } = useSelector((state) => state.user);
   //user data
   const getUserData = async () => {

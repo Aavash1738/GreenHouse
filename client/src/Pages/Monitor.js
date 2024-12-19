@@ -292,15 +292,36 @@ const Monitor = () => {
   }, []);
 
   useEffect(() => {
-    let tempData = [_.mean(tempArr), _.max(tempArr), _.min(tempArr)];
-    let moistData = [_.mean(moistArr), _.max(moistArr), _.min(moistArr)];
-    let humData = [_.mean(humArr), _.max(humArr), _.min(humArr)];
-    let acidityData = [
-      _.mean(acidityArr),
-      _.max(acidityArr),
-      _.min(acidityArr),
+    const validateArray = (arr) =>
+      arr.filter((val) => !isNaN(val) && val !== null && val !== undefined);
+
+    const validTempArr = validateArray(tempArr);
+    const validHumArr = validateArray(humArr);
+    const validMoistArr = validateArray(moistArr);
+    const validAcidityArr = validateArray(acidityArr);
+
+    const tempData = [
+      _.mean(validTempArr) || 0,
+      _.max(validTempArr) || 0,
+      _.min(validTempArr) || 0,
     ];
-    setTableData([
+    const humData = [
+      _.mean(validHumArr) || 0,
+      _.max(validHumArr) || 0,
+      _.min(validHumArr) || 0,
+    ];
+    const moistData = [
+      _.mean(validMoistArr) || 0,
+      _.max(validMoistArr) || 0,
+      _.min(validMoistArr) || 0,
+    ];
+    const acidityData = [
+      _.mean(validAcidityArr) || 0,
+      _.max(validAcidityArr) || 0,
+      _.min(validAcidityArr) || 0,
+    ];
+
+    const updatedTableData = [
       {
         Parameter: "Temperature",
         Average: tempData[0],
@@ -325,20 +346,21 @@ const Monitor = () => {
         Maximum: acidityData[1],
         Minimum: acidityData[2],
       },
-    ]);
+    ];
 
-    localStorage.setItem("tableData", JSON.stringify(tableData));
-  }, [tempArr, humArr, moistArr]);
+    setTableData(updatedTableData);
+    localStorage.setItem("tableData", JSON.stringify(updatedTableData));
+  }, [tempArr, humArr, moistArr, acidityArr]);
 
   return (
     <Layout>
       <div className="greenhouse-monitor">
         <div className="actuator-panel">
-          <i class="fa-solid fa-fire heater pin"></i>
-          <i class="fa-solid fa-droplet water pin"></i>
-          <i class="fa-solid fa-fan fan pin"></i>
-          <i class="fa-solid fa-wind vents pin"></i>
-          <i class="fa-regular fa-lightbulb lights pin"></i>
+          <i className="fa-solid fa-fire heater pin"></i>
+          <i className="fa-solid fa-droplet water pin"></i>
+          <i className="fa-solid fa-fan fan pin"></i>
+          <i className="fa-solid fa-wind vents pin"></i>
+          <i className="fa-regular fa-lightbulb lights pin"></i>
         </div>
         <div className="panel panel-info">
           <div className="panel-body">

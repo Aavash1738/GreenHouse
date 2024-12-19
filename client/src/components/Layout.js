@@ -28,17 +28,18 @@ const Layout = ({ children }) => {
               <hr></hr>
             </div>
             <div className="menu">
-              {SidebarMenu.map((menu) => {
+              {SidebarMenu.map((menu, index) => {
                 const isActive = location.pathname === menu.path;
                 return (
-                  <>
-                    <div className={`menu-item ${isActive && "active"}`}>
-                      <Link to={menu.path}>
-                        <i className={`${menu.icon} pin`}></i>
-                        {menu.name}
-                      </Link>
-                    </div>
-                  </>
+                  <div
+                    key={index}
+                    className={`menu-item ${isActive && "active"}`}
+                  >
+                    <Link to={menu.path}>
+                      <i className={`${menu.icon} pin`}></i>
+                      {menu.name}
+                    </Link>
+                  </div>
                 );
               })}
               <div className={`menu-item`} onClick={handleLogout}>
@@ -51,7 +52,7 @@ const Layout = ({ children }) => {
             <div className="header">
               <div className="header-content">
                 <div className="left">
-                  <i class="fa-solid fa-wheat-awn pin"></i>
+                  <i className="fa-solid fa-wheat-awn pin"></i>
                   <Link to="/settings">{user?.plant}</Link>
                 </div>
                 <div className="right">
@@ -64,7 +65,7 @@ const Layout = ({ children }) => {
               <div className="bodyfill">{children}</div>
               <div className="footer">
                 <Link to="https://github.com/Aavash1738/GreenHouse">
-                  <i class="fa-brands fa-github"></i>
+                  <i className="fa-brands fa-github"></i>
                   View code
                 </Link>
               </div>

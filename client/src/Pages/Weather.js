@@ -61,13 +61,13 @@ const Weather = () => {
 
             <div className="weather-details">
               <div className="temperature">
-                <i class="fa-solid fa-temperature-low icon"></i>
+                <i className="fa-solid fa-temperature-low icon"></i>
                 <h3>Temp</h3>
                 <span className="value">{weatherData.current.temp_c} °C</span>
               </div>
 
               <div className="condition">
-                <i class="fa-solid fa-sun icon"></i>
+                <i className="fa-solid fa-sun icon"></i>
                 <h3>Condition</h3>
                 <span className="value">
                   {weatherData.current.condition.text}
@@ -75,13 +75,13 @@ const Weather = () => {
               </div>
 
               <div className="humidity">
-                <i class="fa-solid fa-droplet icon"></i>
+                <i className="fa-solid fa-droplet icon"></i>
                 <h3>Humidity</h3>
                 <span className="value">{weatherData.current.humidity}%</span>
               </div>
 
               <div className="wind-speed">
-                <i class="fa-solid fa-wind icon"></i>
+                <i className="fa-solid fa-wind icon"></i>
                 <h3>Wind speed</h3>
                 <span className="value">
                   {weatherData.current.wind_kph} kph

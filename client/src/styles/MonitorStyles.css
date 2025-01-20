@@ -1,7 +1,7 @@
 @import url(LayoutStyles.css);
 
 .panel {
-  max-width: 80%;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -31,18 +31,24 @@ div.container {
   display: inline-block;
 }
 
+.stats {
+  overflow-x: scroll;
+}
+
 .gauge-charts {
   display: flex;
   max-width: 100%;
   background-color: var(--main_color);
+  flex-direction: column;
 }
 
 .actuator-panel {
   display: flex;
   flex-direction: row;
+  overflow-x: scroll;
   align-items: center;
   justify-content: space-around;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .actuator-panel > .act-heater {
@@ -68,4 +74,82 @@ div.container {
 .actuator-panel > i {
   font-size: 3rem;
   padding: 15px;
+}
+
+@media (min-width: 720px) {
+  .panel {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+
+  .stats {
+    overflow-x: auto;
+  }
+
+  div.container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #secondary {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+  }
+
+  #container2 {
+    width: 45%;
+    align-self: center;
+    display: inline-block;
+  }
+
+  #container3 {
+    width: 45%;
+    align-self: center;
+    display: inline-block;
+  }
+
+  .gauge-charts {
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    background-color: var(--main_color);
+  }
+
+  .actuator-panel {
+    display: flex;
+    overflow-x: hidden;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+  }
+
+  .actuator-panel > .act-heater {
+    color: orangered;
+  }
+
+  .actuator-panel > .act-lights {
+    color: rgb(239, 213, 16);
+  }
+
+  .actuator-panel > .act-vents {
+    color: turquoise;
+  }
+
+  .actuator-panel > .act-fan {
+    color: rgb(64, 131, 224);
+  }
+
+  .actuator-panel > .act-water {
+    color: rgb(26, 26, 121);
+  }
+
+  .actuator-panel > i {
+    font-size: 3rem;
+    padding: 15px;
+  }
 }

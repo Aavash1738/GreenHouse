@@ -9,11 +9,11 @@ export const userMenu = [
     path: "/monitor",
     icon: "fa-solid fa-chart-simple",
   },
-  {
-    name: "Profile",
-    path: "/profile",
-    icon: "fa-solid fa-user",
-  },
+  // {
+  //   name: "Profile",
+  //   path: "/profile",
+  //   icon: "fa-solid fa-user",
+  // },
   {
     name: "Weather",
     path: "/weather",

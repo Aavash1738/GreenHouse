@@ -324,27 +324,27 @@ const Monitor = () => {
     const updatedTableData = [
       {
         Parameter: "Temperature",
-        Average: tempData[0],
-        Maximum: tempData[1],
-        Minimum: tempData[2],
+        Average: tempData[0].toFixed(2),
+        Maximum: tempData[1].toFixed(2),
+        Minimum: tempData[2].toFixed(2),
       },
       {
         Parameter: "Humidity",
-        Average: humData[0],
-        Maximum: humData[1],
-        Minimum: humData[2],
+        Average: humData[0].toFixed(2),
+        Maximum: humData[1].toFixed(2),
+        Minimum: humData[2].toFixed(2),
       },
       {
         Parameter: "Moisture",
-        Average: moistData[0],
-        Maximum: moistData[1],
-        Minimum: moistData[2],
+        Average: moistData[0].toFixed(2),
+        Maximum: moistData[1].toFixed(2),
+        Minimum: moistData[2].toFixed(2),
       },
       {
         Parameter: "Acidity",
-        Average: acidityData[0],
-        Maximum: acidityData[1],
-        Minimum: acidityData[2],
+        Average: acidityData[0].toFixed(2),
+        Maximum: acidityData[1].toFixed(2),
+        Minimum: acidityData[2].toFixed(2),
       },
     ];
 

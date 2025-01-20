@@ -57,7 +57,8 @@ const Layout = ({ children }) => {
                 </div>
                 <div className="right">
                   <i className="fa-solid fa-bell pin"></i>
-                  <Link to="/profile">{user?.name}</Link>
+                  {/* <Link to="/profile"></Link> */}
+                  {user?.name}
                 </div>
               </div>
             </div>

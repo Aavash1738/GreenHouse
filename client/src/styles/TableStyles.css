@@ -1,3 +1,12 @@
+:root {
+  --main_color: #6bbf59;
+  --main_header_footer: #4f9a45;
+  --text: #116a05;
+  --sub_color: #d9d9d9 /*228b22*/;
+  --accent: #ffd700;
+  --off_white: #ffddff;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -7,18 +16,22 @@ table {
 }
 
 thead tr {
-  background-color: #228b22;
+  background-color: var(--text);
   color: #ffffff;
   text-align: left;
   font-weight: bold;
 }
 
 tbody tr:nth-child(even) {
-  background-color: #f3f3f3;
+  background-color: var(--sub_color);
+}
+
+tbody tr:nth-child(odd) {
+  background-color: var(--main_header_footer);
 }
 
 tbody tr:hover {
-  background-color: #f1f1f1;
+  background-color: var(--off_white);
 }
 
 th,

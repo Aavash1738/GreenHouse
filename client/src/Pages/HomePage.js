@@ -32,7 +32,7 @@ const HomePage = () => {
     const getWeather = async () => {
       try {
         const response = await axios.get(
-          `https://sbucket1738.s3.amazonaws.com/${user?.name}/data`
+          `htts://sbucket1738.s3.amazonaws.com/${user?.name}/data`
         );
         // Set temperature, humidity, and timestamps state based on API response
         const data = response.data;

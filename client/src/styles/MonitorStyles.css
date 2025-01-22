@@ -51,6 +51,18 @@ div.container {
   margin-bottom: 1rem;
 }
 
+.panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.gauge-charts {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
 .actuator-panel > .act-heater {
   color: orangered;
 }

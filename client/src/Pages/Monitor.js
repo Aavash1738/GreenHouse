@@ -10,8 +10,8 @@ import { useSelector } from "react-redux";
 import DataTable from "../components/Table";
 import _ from "lodash";
 
-const main_color = "#f0efef";
-const back_color = "#228b22";
+const main_color = "#6bbf59";
+const back_color = "#ffddff";
 const main_green = "#11FF11";
 const main_yellow = "#FFEE11";
 const main_red = "#FF1111";
@@ -41,7 +41,9 @@ const Monitor = () => {
 
   const temperatureHumidityOptions = {
     chart: {
-      backgroundColor: main_color,
+      backgroundColor: back_color,
+      borderRadius: 10,
+      spacing: 20,
     },
     title: { text: "Temperature and Humidity" },
     yAxis: {
@@ -74,7 +76,12 @@ const Monitor = () => {
   };
 
   const moistureOptions = {
-    chart: { type: "gauge", backgroundColor: main_color },
+    chart: {
+      type: "gauge",
+      backgroundColor: back_color,
+      borderRadius: 10,
+      spacing: 20,
+    },
     title: { text: "Soil Moisture" },
     pane: {
       startAngle: -150,
@@ -89,7 +96,7 @@ const Monitor = () => {
       min: 0,
       max: 100,
       minorTickInterval: 0,
-      tickColor: main_color,
+      tickColor: back_color,
       tickLength: 40,
       tickPixelInterval: 60,
       tickWidth: 2,
@@ -149,7 +156,12 @@ const Monitor = () => {
   };
 
   const acidityOptions = {
-    chart: { type: "gauge", backgroundColor: main_color },
+    chart: {
+      type: "gauge",
+      backgroundColor: back_color,
+      borderRadius: 10,
+      spacing: 20,
+    },
     title: { text: "Soil Acidity" },
     pane: {
       startAngle: -150,
@@ -164,7 +176,7 @@ const Monitor = () => {
       min: 0,
       max: 100,
       minorTickInterval: 0,
-      tickColor: main_color,
+      tickColor: back_color,
       tickLength: 40,
       tickPixelInterval: 60,
       tickWidth: 2,
@@ -239,7 +251,7 @@ const Monitor = () => {
     const fetchWeatherData = async () => {
       try {
         const response = await axios.get(
-          `https://sbucket1738.s3.amazonaws.com/${user?.name}/data`
+          `htts://sbucket1738.s3.amazonaws.com/${user?.name}/data`
         );
 
         let { humidity, temperature, timestamps } = response.data;

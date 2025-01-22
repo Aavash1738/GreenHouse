@@ -1,6 +1,10 @@
 :root {
-  --main_color: #f0efef;
-  --sub_color: #228b22 /*228b22*/;
+  --main_color: #6bbf59;
+  --main_header_footer: #4f9a45;
+  --text: #116a05;
+  --sub_color: #d9d9d9 /*228b22*/;
+  --accent: #ffd700;
+  --off_white: #ffddff;
 }
 
 .main {
@@ -19,7 +23,7 @@
   width: 100%;
   border-radius: 15px;
   background-color: var(--main_color);
-  box-shadow: 0 0 2px grey;
+  box-shadow: 0 0 2px var(--sub_color);
   margin-right: 5px;
 }
 
@@ -43,10 +47,11 @@ i.fa-solid.fa-temperature-three-quarters.pin {
   overflow-y: scroll;
   border-radius: 15px;
   background-color: var(--main_color);
-  box-shadow: 0 0 2px grey;
+  box-shadow: 0 0 2px var(--sub_color);
   padding: 5px;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .bodyfill {
@@ -74,7 +79,7 @@ i.fa-solid.fa-temperature-three-quarters.pin {
 .menu {
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
+  overflow-x: auto;
   padding-left: 00px;
   margin: 0;
 }
@@ -100,11 +105,13 @@ i.fa-solid.fa-temperature-three-quarters.pin {
 }
 
 .active {
-  background-color: var(--sub_color);
+  background-color: var(--accent);
+  border-top: 1px solid var(--off_white);
+  border-bottom: 1px solid var(--off_white);
   color: white;
   /* border: 1px solid rgb(77, 247, 105);
-border-radius: 2px; */
-  width: 100%;
+  border-radius: 2px; */
+  width: 30%;
   padding: 5px 0;
   padding-left: 5px;
 }
@@ -123,8 +130,8 @@ border-radius: 2px; */
   margin-top: 20px;
   margin-bottom: 20px;
   border-radius: 5px;
-  background-color: var(--main_color);
-  box-shadow: 0 0 2px grey;
+  background-color: var(--main_header_footer);
+  box-shadow: 0 0 2px var(--sub_color);
 }
 
 .header-content {
@@ -152,18 +159,18 @@ border-radius: 2px; */
 }
 
 .header-content a {
-  color: #1c1d48;
+  color: var(--accent);
   text-decoration: none;
   text-transform: uppercase;
 }
 
 .header-content .pin {
-  color: #1c1d48;
+  color: var(--accent);
   margin-right: 5px;
 }
 
 .header-content .left a {
-  color: #1c1d48;
+  color: var(--accent);
   text-decoration: none;
   text-transform: capitalize;
 }
@@ -173,14 +180,17 @@ border-radius: 2px; */
 }
 
 .footer {
-  background-color: var(--main_color); /* Add your footer styling here */
+  background-color: var(
+    --main_header_footer
+  ); /* Add your footer styling here */
   text-align: center;
   color: #1c1d48;
   padding-top: 5px;
   padding-bottom: 0px;
   margin-bottom: 0px;
+  border-radius: 5px;
   font-size: 0.9 rem;
-  border-top: 1px dotted #1c1d48;
+  border: 1px dotted #1c1d48;
 }
 
 .footer a:hover {
@@ -193,11 +203,11 @@ border-radius: 2px; */
 
 .footer a {
   text-decoration: none;
-  color: #1c1d48;
+  color: var(--accent);
 }
 
 .footer :visited {
-  color: #1c1d48;
+  color: var(--accent);
 }
 
 h6 {
@@ -208,7 +218,7 @@ h6 {
 
 .card i {
   font-size: 20px;
-  color: #28a745; /* You can change the color based on the theme */
+  color: var(--main_color); /* You can change the color based on the theme */
   margin-bottom: 10px;
 }
 
@@ -227,8 +237,8 @@ h5 {
 }
 
 .card {
-  background-color: #fff;
-  border-radius: 5px;
+  background-color: var(--off_white);
+  border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
   width: 150px;
@@ -250,13 +260,13 @@ h3 {
 .card h3 {
   margin: 0 0 5px;
   font-size: 16px;
-  color: #333;
+  color: #212529;
 }
 
 /* Card content (e.g., data) styling */
 .card p {
   font-size: 18px;
-  color: #28a745;
+  color: var(--text);
 }
 
 @media (min-width: 720px) {
@@ -276,7 +286,7 @@ h3 {
     width: 300px;
     border-radius: 5px;
     background-color: var(--main_color);
-    box-shadow: 0 0 2px grey;
+    box-shadow: 0 0 2px var(--sub_color);
     margin-right: 15px;
   }
 
@@ -300,7 +310,7 @@ h3 {
     margin-top: 1.5px;
     margin-bottom: 20px;
     border-radius: 5px;
-    background-color: var(--main_color);
+    background-color: var(--main_header_footer);
     box-shadow: 0 0 2px grey;
   }
 
@@ -309,10 +319,11 @@ h3 {
     overflow-y: scroll;
     border-radius: 5px;
     background-color: var(--main_color);
-    box-shadow: 0 0 2px grey;
+    box-shadow: 0 0 2px var(--sub_color);
     padding: 8px;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
   }
 
   .bodyfill {
@@ -341,7 +352,7 @@ h3 {
     display: flex;
     flex-direction: column;
     padding-left: 00px;
-    overflow-x: hidden;
+    overflow-x: auto;
     margin: 0;
   }
 
@@ -366,7 +377,7 @@ h3 {
   }
 
   .active {
-    background-color: var(--sub_color);
+    background-color: var(--accent);
     color: white;
     /* border: 1px solid rgb(77, 247, 105);
   border-radius: 2px; */
@@ -409,18 +420,18 @@ h3 {
   }
 
   .header-content a {
-    color: #1c1d48;
+    color: var(--accent);
     text-decoration: none;
     text-transform: uppercase;
   }
 
   .header-content .pin {
-    color: #1c1d48;
+    color: var(--accent);
     margin-right: 5px;
   }
 
   .header-content .left a {
-    color: #1c1d48;
+    color: var(--accent);
     text-decoration: none;
     text-transform: capitalize;
   }
@@ -430,7 +441,9 @@ h3 {
   }
 
   .footer {
-    background-color: var(--main_color); /* Add your footer styling here */
+    background-color: var(
+      --main_header_footer
+    ); /* Add your footer styling here */
     text-align: center;
     color: #1c1d48;
     padding-top: 5px;
@@ -450,11 +463,11 @@ h3 {
 
   .footer a {
     text-decoration: none;
-    color: #1c1d48;
+    color: var(--accent);
   }
 
   .footer :visited {
-    color: #1c1d48;
+    color: var(--accent);
   }
 
   h6 {
@@ -465,7 +478,9 @@ h3 {
 
   .card i {
     font-size: 40px;
-    color: #28a745; /* You can change the color based on the theme */
+    color: var(
+      --main_header_footer
+    ); /* You can change the color based on the theme */
     margin-bottom: 10px;
   }
 
@@ -477,6 +492,7 @@ h3 {
     padding: 20px;
     max-width: 100%;
     margin: 0 auto;
+    overflow-y: auto;
   }
 
   h5 {
@@ -484,7 +500,7 @@ h3 {
   }
 
   .card {
-    background-color: #fff;
+    background-color: var(--off_white);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -507,12 +523,12 @@ h3 {
   .card h3 {
     margin: 0 0 10px;
     font-size: 18px;
-    color: #333;
+    color: #212529;
   }
 
   /* Card content (e.g., data) styling */
   .card p {
     font-size: 24px;
-    color: #28a745;
+    color: var(--text);
   }
 }

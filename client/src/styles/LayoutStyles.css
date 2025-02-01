@@ -5,6 +5,7 @@
   --sub_color: #d9d9d9 /*228b22*/;
   --accent: #ffd700;
   --off_white: #ffddff;
+  --invalid: #ab0404;
 }
 
 .main {
@@ -269,6 +270,10 @@ h3 {
   color: var(--text);
 }
 
+.invalid {
+  border: 1px solid var(--invalid);
+}
+
 @media (min-width: 720px) {
   .main {
     padding: 10px;
@@ -530,5 +535,9 @@ h3 {
   .card p {
     font-size: 24px;
     color: var(--text);
+  }
+
+  .invalid {
+    border: 1px solid var(--invalid);
   }
 }

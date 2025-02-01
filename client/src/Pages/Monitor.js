@@ -251,10 +251,12 @@ const Monitor = () => {
     const fetchWeatherData = async () => {
       try {
         const response = await axios.get(
-          `htts://sbucket1738.s3.amazonaws.com/${user?.name}/data`
+          `https://sbucket1738.s3.amazonaws.com/${user?.name}/data`
         );
+        console.log(response);
 
-        let { humidity, temperature, timestamps } = response.data;
+        let { humidity, temperature, moisture, light, timestamps } =
+          response.data;
         setHumArr((prevData) => {
           const updatedData = [...prevData, Number(humidity)];
           return updatedData.slice(-8);
@@ -264,10 +266,11 @@ const Monitor = () => {
           return updatedData.slice(-8);
         });
         setMoistArr((prevData) => {
-          const updatedData = [
-            Math.ceil(Math.random() * (60 - 40)),
-            ...prevData,
-          ];
+          const updatedData = [...prevData, Number(moisture)];
+          return updatedData.slice(-8);
+        });
+        setLightArr((prevData) => {
+          const updatedData = [...prevData, Number(light)];
           return updatedData.slice(-8);
         });
         setAcidityArr((prevData) => {
@@ -299,7 +302,7 @@ const Monitor = () => {
     };
 
     fetchWeatherData();
-    const intervalId = setInterval(fetchWeatherData, 10000); // Polling every 10 seconds
+    const intervalId = setInterval(fetchWeatherData, 5000); // Polling every 10 seconds
     return () => clearInterval(intervalId);
   }, []);
 

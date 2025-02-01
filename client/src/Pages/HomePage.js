@@ -7,6 +7,8 @@ const HomePage = () => {
   // Define state for temperature, humidity, and timestamps
   const [temperature, setTemperature] = useState(null);
   const [humidity, setHumidity] = useState(null);
+  const [moisture, setMoisture] = useState(null);
+  const [light, setLight] = useState(null);
   const [timestamps, setTimestamps] = useState(null);
   const [time, setTime] = useState(null);
 
@@ -31,9 +33,11 @@ const HomePage = () => {
   useEffect(() => {
     const getWeather = async () => {
       try {
+        const timestamp = new Date().getTime();
         const response = await axios.get(
-          `htts://sbucket1738.s3.amazonaws.com/${user?.name}/data`
+          `https://sbucket1738.s3.amazonaws.com/${user?.name}/data`
         );
+        console.log(response);
         // Set temperature, humidity, and timestamps state based on API response
         const data = response.data;
         const date = new Date(data.timestamps);
@@ -42,6 +46,8 @@ const HomePage = () => {
         setTime(setup);
         setTemperature(data.temperature);
         setHumidity(data.humidity);
+        setMoisture(data.moisture);
+        setLight(data.light);
         setTimestamps(data.timestamps);
       } catch (error) {
         console.log(error);
@@ -49,9 +55,11 @@ const HomePage = () => {
     };
 
     getUserData();
-    getWeather();
+    if (user?.name) {
+      getWeather();
+    }
 
-    const timer = setTimeout(() => {}, 10000);
+    const timer = setTimeout(() => {}, 5000);
 
     // Cleanup function
     return () => clearTimeout(timer);
@@ -83,16 +91,18 @@ const HomePage = () => {
 
         {/* Other cards remain unchanged */}
         <div className="card">
-          <i className="fas fa-sun"></i>
+          <i className={`fas ${light === 0 ? "fa-sun" : "fa-moon"}`}></i>
           <h3>Light Level</h3>
-          <p>750 lx</p>
+          <p>
+            {light !== null ? (light === 0 ? "Bright" : "Dark") : "Loading..."}
+          </p>
         </div>
         <div className="card">
           <i className="fa-solid fa-droplet"></i>
           <h3>Soil Moisture</h3>
-          <p>30%</p>
+          <p>{moisture !== null ? `${moisture} %` : "Loading..."}</p>
         </div>
-        <div className="card">
+        <div className="card invalid">
           <i className="fa-solid fa-seedling"></i>
           <h3>NPK sensor</h3>
           <p>Closed</p>
@@ -117,7 +127,7 @@ const HomePage = () => {
           <h3>Fan</h3>
           <p>On</p>
         </div>
-        <div className="card">
+        <div className="card invalid">
           <i className="fa-solid fa-spray-can"></i>
           <h3>Humidifier</h3>
           <p>Active</p>

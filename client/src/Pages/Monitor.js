@@ -141,7 +141,7 @@ const Monitor = () => {
     series: [
       {
         name: "Moisture",
-        data: [moistArr[0]],
+        data: [moistArr[moistArr.length - 1]], // Use the most recent value
         dataLabels: {
           borderWidth: 1,
           style: {
@@ -257,29 +257,14 @@ const Monitor = () => {
 
         let { humidity, temperature, moisture, light, timestamps } =
           response.data;
-        setHumArr((prevData) => {
-          const updatedData = [...prevData, Number(humidity)];
-          return updatedData.slice(-8);
-        });
-        setTempArr((prevData) => {
-          const updatedData = [...prevData, Number(temperature)];
-          return updatedData.slice(-8);
-        });
-        setMoistArr((prevData) => {
-          const updatedData = [...prevData, Number(moisture)];
-          return updatedData.slice(-8);
-        });
-        setLightArr((prevData) => {
-          const updatedData = [...prevData, Number(light)];
-          return updatedData.slice(-8);
-        });
-        setAcidityArr((prevData) => {
-          const updatedData = [
-            Math.ceil(Math.random() * (60 - 40)),
-            ...prevData,
-          ];
-          return updatedData.slice(-8);
-        });
+
+        setHumArr((prevData) => [...prevData, Number(humidity)].slice(-8));
+        setTempArr((prevData) => [...prevData, Number(temperature)].slice(-8));
+        setMoistArr((prevData) => [...prevData, Number(moisture)].slice(-8));
+        setLightArr((prevData) => [...prevData, Number(light)].slice(-8));
+        setAcidityArr((prevData) =>
+          [Math.ceil(Math.random() * (60 - 40)), ...prevData].slice(-8)
+        );
 
         // Assuming response.data contains properties for actuator states
         // const { humidity, temperature, acidity, moisture, light, heater, water, fan, vents, lights } =

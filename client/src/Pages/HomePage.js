@@ -57,12 +57,10 @@ const HomePage = () => {
     getUserData();
     if (user?.name) {
       getWeather();
+      const interval = setInterval(getWeather, 5000);
+
+      return () => clearInterval(interval);
     }
-
-    const timer = setTimeout(() => {}, 5000);
-
-    // Cleanup function
-    return () => clearTimeout(timer);
   }, [user?.name]);
 
   return (

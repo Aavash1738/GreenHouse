@@ -12,6 +12,14 @@ const HomePage = () => {
   const [timestamps, setTimestamps] = useState(null);
   const [time, setTime] = useState(null);
 
+  const [actuator, setActuator] = useState({
+    heater: false,
+    water: false,
+    fan: false,
+    vents: false,
+    lights: false,
+  });
+
   const { user } = useSelector((state) => state.user);
   // Fetch user data
   const getUserData = async () => {
@@ -49,6 +57,13 @@ const HomePage = () => {
         setMoisture(data.moisture);
         setLight(data.light);
         setTimestamps(data.timestamps);
+        setActuator({
+          heater: data.heater_state === 1,
+          fan: data.fan_state === 1,
+          lights: data.light_state === 1,
+          water: data.water_state === 1 || false,
+          vents: data.vents_state === 1 || false,
+        });
       } catch (error) {
         console.log(error);
       }
@@ -57,7 +72,7 @@ const HomePage = () => {
     getUserData();
     if (user?.name) {
       getWeather();
-      const interval = setInterval(getWeather, 5000);
+      const interval = setInterval(getWeather, 10000);
 
       return () => clearInterval(interval);
     }
@@ -108,22 +123,22 @@ const HomePage = () => {
         <div className="card">
           <i className="fas fa-water"></i>
           <h3>Watering Status</h3>
-          <p>Active</p>
+          <p>{actuator.water ? "Active" : "Inactive"}</p>
         </div>
         <div className="card">
           <i className="fas fa-lightbulb"></i>
-          <h3>Light On/Off</h3>
-          <p>On</p>
+          <h3>Lights</h3>
+          <p>{actuator.lights ? "On" : "Off"}</p>
         </div>
         <div className="card">
           <i className="fas fa-fire-alt"></i>
           <h3>Heater</h3>
-          <p>Off</p>
+          <p>{actuator.heater ? "On" : "Off"}</p>
         </div>
         <div className="card">
           <i className="fas fa-wind"></i>
           <h3>Fan</h3>
-          <p>On</p>
+          <p>{actuator.fan ? "On" : "Off"}</p>
         </div>
         <div className="card invalid">
           <i className="fa-solid fa-spray-can"></i>

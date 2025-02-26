@@ -32,11 +32,11 @@ const Monitor = () => {
   const [acidityArr, setAcidityArr] = useState([]);
   const [lightArr, setLightArr] = useState([]);
   const [actuator, setActuator] = useState({
-    heater: true,
-    water: true,
-    fan: true,
-    vents: true,
-    lights: true,
+    heater: false,
+    water: false,
+    fan: false,
+    vents: false,
+    lights: false,
   });
 
   const temperatureHumidityOptions = {
@@ -266,6 +266,14 @@ const Monitor = () => {
           [Math.ceil(Math.random() * (60 - 40)), ...prevData].slice(-8)
         );
 
+        setActuator({
+          heater: response.data.heater_state === 1,
+          fan: response.data.fan_state === 1,
+          lights: response.data.light_state === 1,
+          water: response.data.water_state === 1 || false,
+          vents: response.data.vents_state === 1 || false,
+        });
+
         // Assuming response.data contains properties for actuator states
         // const { humidity, temperature, acidity, moisture, light, heater, water, fan, vents, lights } =
         //   response.data;
@@ -287,7 +295,7 @@ const Monitor = () => {
     };
 
     fetchWeatherData();
-    const intervalId = setInterval(fetchWeatherData, 5000); // Polling every 10 seconds
+    const intervalId = setInterval(fetchWeatherData, 10000); // Polling every 10 seconds
     return () => clearInterval(intervalId);
   }, []);
 

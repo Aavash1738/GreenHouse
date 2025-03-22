@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Layout from "./../components/Layout";
 import { useSelector } from "react-redux";
+import AWS from "aws-sdk";
 
 const HomePage = () => {
   // Define state for temperature, humidity, and timestamps
@@ -39,30 +40,53 @@ const HomePage = () => {
   };
 
   useEffect(() => {
+    AWS.config.update({
+      region: "regionalValue",
+      accessKeyId: "AccessKeyValue",
+      secretAccessKey: "SecretKeyValue",
+    });
+
+    const dynamoDB = new AWS.DynamoDB.DocumentClient();
+
     const getWeather = async () => {
       try {
-        const timestamp = new Date().getTime();
-        const response = await axios.get(
-          `https://sbucket1738.s3.amazonaws.com/${user?.name}/data`
-        );
+        const params = {
+          TableName: "GreenData",
+          Key: {
+            DeviceID: "Latest",
+          },
+        };
+
+        const response = await dynamoDB.get(params).promise();
         console.log(response);
-        // Set temperature, humidity, and timestamps state based on API response
-        const data = response.data;
-        const date = new Date(data.timestamps);
+
+        let {
+          humidity,
+          temperature,
+          moisture,
+          light,
+          timestamps,
+          heater_state,
+          fan_state,
+          light_state,
+          water_state,
+        } = response.Item.Data;
+        const date = new Date(timestamps);
         const setup =
           date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         setTime(setup);
-        setTemperature(data.temperature);
-        setHumidity(data.humidity);
-        setMoisture(data.moisture);
-        setLight(data.light);
-        setTimestamps(data.timestamps);
+
+        setTemperature(temperature);
+        setHumidity(humidity);
+        setMoisture(moisture);
+        setLight(light);
+        setTimestamps(timestamps);
         setActuator({
-          heater: data.heater_state === 1,
-          fan: data.fan_state === 1,
-          lights: data.light_state === 1,
-          water: data.water_state === 1 || false,
-          vents: data.vents_state === 1 || false,
+          heater: heater_state === 1,
+          fan: fan_state === 1,
+          lights: light_state === 1,
+          water: water_state === 1 || false,
+          vents: false,
         });
       } catch (error) {
         console.log(error);

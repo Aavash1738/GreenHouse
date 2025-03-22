@@ -9,6 +9,7 @@ import "./../styles/MonitorStyles.css";
 import { useSelector } from "react-redux";
 import DataTable from "../components/Table";
 import _ from "lodash";
+import AWS from "aws-sdk";
 
 const main_color = "#6bbf59";
 const back_color = "#ffddff";
@@ -22,9 +23,8 @@ HighchartsGauge(Highcharts);
 
 const Monitor = () => {
   const { user } = useSelector((state) => state.user);
-  const [tableData, setTableData] = useState(
-    JSON.parse(localStorage.getItem("tableData")) || []
-  );
+  const [tableData, setTableData] = useState([]);
+
   const [humArr, setHumArr] = useState([]);
   const [tempArr, setTempArr] = useState([]);
   const [timeArr, setTimeArr] = useState([]);
@@ -39,13 +39,13 @@ const Monitor = () => {
     lights: false,
   });
 
-  const temperatureHumidityOptions = {
+  const temperatureOptions = {
     chart: {
       backgroundColor: back_color,
       borderRadius: 10,
       spacing: 20,
     },
-    title: { text: "Temperature and Humidity" },
+    title: { text: "Temperature" },
     yAxis: {
       max: 100,
       min: 0,
@@ -56,33 +56,84 @@ const Monitor = () => {
       title: { text: "Value" },
       plotBands: [
         {
-          from: 60,
-          to: 75,
-          color: "rgba(126, 126, 255, 0.3)", // Semi-transparent blue
-        },
-        {
-          from: 21, // Start of the colored section
-          to: 13, // End of the colored section
-          color: "rgba(255, 126, 126, 0.3)", // Semi-transparent green
+          from: 25, // Start of the colored section
+          to: 12, // End of the colored section
+          // color: "rgba(255, 126, 126, 0.3)", // Semi-transparent green
+          color: "rgba(122, 255, 20, 0.5)",
         },
         ,
       ],
     },
     xAxis: { categories: timeArr },
-    series: [
-      { name: "Humidity", data: humArr, color: main_blue },
-      { name: "Temperature", data: tempArr, color: main_red },
-    ],
+    series: [{ name: "Temperature", data: tempArr, color: main_red }],
+  };
+
+  const humidityOptions = {
+    chart: {
+      backgroundColor: back_color,
+      borderRadius: 10,
+      spacing: 20,
+    },
+    title: { text: "Humidity" },
+    yAxis: {
+      max: 100,
+      min: 0,
+      gridLineColor: "rgba(25, 127, 7, 0.2)",
+      gridLineWidth: 0.8,
+      gridLineDashStyle: "Dash",
+      tickInterval: 20,
+      title: { text: "Value" },
+      plotBands: [
+        {
+          from: 55,
+          to: 75,
+          // color: "rgba(126, 126, 255, 0.3)", // Semi-transparent blue
+          color: "rgba(122, 255, 20, 0.5)",
+        },
+        ,
+      ],
+    },
+    xAxis: { categories: timeArr },
+    series: [{ name: "Humidity", data: humArr, color: main_blue }],
   };
 
   const moistureOptions = {
+    chart: {
+      backgroundColor: back_color,
+      borderRadius: 10,
+      spacing: 20,
+    },
+    title: { text: "Moisture" },
+    yAxis: {
+      max: 100,
+      min: 0,
+      gridLineColor: "rgba(25, 127, 7, 0.2)",
+      gridLineWidth: 0.8,
+      gridLineDashStyle: "Dash",
+      tickInterval: 20,
+      title: { text: "Value" },
+      plotBands: [
+        {
+          from: 40,
+          to: 60,
+          // color: "rgba(126, 126, 255, 0.3)", // Semi-transparent blue
+          color: "rgba(122, 255, 20, 0.5)",
+        },
+        ,
+      ],
+    },
+    xAxis: { categories: timeArr },
+    series: [{ name: "Moisture", data: moistArr, color: main_green }],
+  };
+
+  const lightOptions = {
     chart: {
       type: "gauge",
       backgroundColor: back_color,
       borderRadius: 10,
       spacing: 20,
     },
-    title: { text: "Soil Moisture" },
+    title: { text: "Brightness" },
     pane: {
       startAngle: -150,
       size: "80%",
@@ -99,7 +150,7 @@ const Monitor = () => {
       tickColor: back_color,
       tickLength: 40,
       tickPixelInterval: 60,
-      tickWidth: 2,
+      tickWidth: 1,
       lineWidth: 0,
       title: {
         text: "%",
@@ -110,29 +161,15 @@ const Monitor = () => {
       plotBands: [
         {
           from: 0,
-          to: 36,
-          color: main_red,
-          innerRadius: "87%",
-          borderRadius: "50%",
-        },
-        {
-          from: 35,
-          to: 51,
-          color: main_yellow,
-          innerRadius: "87%",
-          zIndex: 1,
-        },
-        {
-          from: 50,
-          to: 80,
-          color: main_green,
-          innerRadius: "87%",
-          zIndex: 1,
-        },
-        {
-          from: 79,
           to: 100,
-          color: "#FF1111",
+          color: {
+            linearGradient: { x1: 0, x2: 1, y1: 1, y2: 0.8 }, // Horizontal gradient
+            stops: [
+              [0, "#000000"], // Black at 0%
+              [0.5, "#FFA500"], // Orange at 50%
+              [1, "#EFF500"], // Yellow at 100%
+            ],
+          },
           innerRadius: "87%",
           borderRadius: "50%",
         },
@@ -140,8 +177,8 @@ const Monitor = () => {
     },
     series: [
       {
-        name: "Moisture",
-        data: [moistArr[moistArr.length - 1]], // Use the most recent value
+        name: "Brightness",
+        data: [lightArr[lightArr.length - 1]], // Use the most recent value
         dataLabels: {
           borderWidth: 1,
           style: {
@@ -245,46 +282,57 @@ const Monitor = () => {
         ele.classList.remove(`act-${value}`);
       }
     });
-  }, [actuator]); // Runs whenever actuator.heater changes
+  }, [actuator]);
 
   useEffect(() => {
+    AWS.config.update({
+      region: "regionalValue",
+      accessKeyId: "AccessKeyValue",
+      secretAccessKey: "SecretAccessKeyValue",
+    });
+
+    const dynamoDB = new AWS.DynamoDB.DocumentClient();
+
     const fetchWeatherData = async () => {
       try {
-        const response = await axios.get(
-          `https://sbucket1738.s3.amazonaws.com/${user?.name}/data`
-        );
+        const params = {
+          TableName: "GreenData",
+          Key: {
+            DeviceID: "Latest",
+          },
+        };
+
+        const response = await dynamoDB.get(params).promise();
         console.log(response);
 
-        let { humidity, temperature, moisture, light, timestamps } =
-          response.data;
+        let {
+          humidity,
+          temperature,
+          moisture,
+          light,
+          timestamps,
+          heater_state,
+          fan_state,
+          light_state,
+          water_state,
+        } = response.Item.Data;
 
         setHumArr((prevData) => [...prevData, Number(humidity)].slice(-8));
         setTempArr((prevData) => [...prevData, Number(temperature)].slice(-8));
         setMoistArr((prevData) => [...prevData, Number(moisture)].slice(-8));
-        setLightArr((prevData) => [...prevData, Number(light)].slice(-8));
+        setLightArr((prevData) => [...prevData, Number(light) * 100].slice(-8));
         setAcidityArr((prevData) =>
           [Math.ceil(Math.random() * (60 - 40)), ...prevData].slice(-8)
         );
 
         setActuator({
-          heater: response.data.heater_state === 1,
-          fan: response.data.fan_state === 1,
-          lights: response.data.light_state === 1,
-          water: response.data.water_state === 1 || false,
-          vents: response.data.vents_state === 1 || false,
+          heater: heater_state === 1 || false,
+          fan: fan_state === 1 || false,
+          lights: light_state === 1 || false,
+          water: water_state === 1 || false,
+          vents: false,
         });
 
-        // Assuming response.data contains properties for actuator states
-        // const { humidity, temperature, acidity, moisture, light, heater, water, fan, vents, lights } =
-        //   response.data;
-        // setActuator((prevState) => ({
-        //   ...prevState,
-        //   heater: heater,
-        //   water: water,
-        //   fan: fan,
-        //   vents: vents,
-        //   lights: lights,
-        // }));
         const date = new Date(timestamps);
         const setup =
           date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
@@ -356,9 +404,17 @@ const Monitor = () => {
       },
     ];
 
-    setTableData(updatedTableData);
     localStorage.setItem("tableData", JSON.stringify(updatedTableData));
+
+    setTableData(updatedTableData);
   }, [tempArr, humArr, moistArr, acidityArr]);
+
+  useEffect(() => {
+    const storedTableData = localStorage.getItem("tableData");
+    if (storedTableData) {
+      setTableData(JSON.parse(storedTableData));
+    }
+  }, []);
 
   return (
     <Layout>
@@ -374,13 +430,18 @@ const Monitor = () => {
           <div className="panel-body">
             <HighchartsReact
               highcharts={Highcharts}
-              options={temperatureHumidityOptions}
+              options={temperatureOptions}
+            />
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={humidityOptions}
+            />
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={moistureOptions}
             />
             <div className="gauge-charts">
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={moistureOptions}
-              />
+              <HighchartsReact highcharts={Highcharts} options={lightOptions} />
               <HighchartsReact
                 highcharts={Highcharts}
                 options={acidityOptions}

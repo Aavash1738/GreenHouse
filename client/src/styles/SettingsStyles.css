@@ -1,4 +1,8 @@
 /* Styles for Settings page */
+* {
+  padding: 0px;
+  margin: 0px;
+}
 
 .settings-container {
   display: flex;
@@ -22,6 +26,11 @@ h3 {
   text-align: center;
 }
 
+h4 {
+  padding: 0px;
+  margin: 0px;
+}
+
 label {
   font-size: 1.2em;
   color: #333;
@@ -36,6 +45,59 @@ select {
   border-radius: 7px;
   margin-top: 10px;
   background-color: #f9f9f9;
+}
+
+.individual {
+  width: full;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  align-items: center;
+  justify-content: center;
+}
+
+.individual > h4 {
+  margin-right: 10px;
+  width: 10rem;
+}
+
+input {
+  width: 250px;
+  padding: 5px;
+  padding-left: 10px;
+  font-size: 1.1em;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  margin-top: 10px;
+  background-color: #f9f9f9;
+}
+
+.paramSubmit {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #228b22; /*#28a745;*/
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: center;
+  width: 150px;
+  font-size: large;
+}
+
+.separation {
+  margin-top: 20px;
+}
+
+.user-input {
+  color: #333;
+  width: full;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
 }
 
 select:focus {

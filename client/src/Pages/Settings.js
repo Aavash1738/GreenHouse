@@ -61,6 +61,70 @@ const Settings = () => {
           Save Changes
         </button>
       </div>
+      <h3 className="separation">Change control parameters</h3>
+      <form className="user-input">
+        <div className="individual">
+          <h4>Temperature</h4>
+          <input
+            type="number"
+            id="minTemp"
+            name="minTemp"
+            min="0"
+            max="100"
+            placeholder="Minimum temperature"
+          />
+          <input
+            type="number"
+            id="maxTemp"
+            name="maxTemp"
+            min="0"
+            max="100"
+            placeholder="Maximum temperature"
+          />
+        </div>
+
+        <div className="individual">
+          <h4>Humidity</h4>
+          <input
+            type="number"
+            id="minHumid"
+            name="minHumid"
+            min="0"
+            max="100"
+            placeholder="Minimum humidity"
+          />
+          <input
+            type="number"
+            id="maxHumid"
+            name="maxHumid"
+            min="0"
+            max="100"
+            placeholder="Maximum humidity"
+          />
+        </div>
+
+        <div className="individual">
+          <h4>Soil Moisture</h4>
+          <input
+            type="number"
+            id="minMoist"
+            name="minMoist"
+            min="0"
+            max="100"
+            placeholder="Minimum moisture"
+          />
+          <input
+            type="number"
+            id="maxMoist"
+            name="maxMoist"
+            min="0"
+            max="100"
+            placeholder="Maximum moisture"
+          />
+        </div>
+
+        <input type="submit" value="Submit Values" className="paramSubmit" />
+      </form>
     </Layout>
   );
 };

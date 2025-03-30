@@ -1,0 +1,8 @@
+{
+  "minTemp": 26,
+  "maxTemp": 30,
+  "minHumid": 40,
+  "maxHumid": 60,
+  "minMoist": 20,
+  "maxMoist": 80
+}

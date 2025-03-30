@@ -3,10 +3,26 @@ import Layout from "../components/Layout";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import "../styles/SettingsStyles.css";
+import { useMqttClient } from "./mqttclient";
+import threshold from "../Data/threshold.json";
 
 const Settings = () => {
+  const topic = "ESP32_FINAL/sub";
+  const { connectionStatus, messages, connect, publish } = useMqttClient(topic);
+  useEffect(() => {
+    connect();
+  }, []);
+
   const [selectedPlant, setSelectedPlant] = useState("");
   const { user } = useSelector((state) => state.user);
+  const [userParam, setUserParam] = useState({
+    minTemp: 0,
+    maxTemp: 0,
+    minHumid: 0,
+    maxHumid: 0,
+    minMoist: 0,
+    maxMoist: 0,
+  });
 
   useEffect(() => {
     if (user?.plant) {
@@ -62,7 +78,14 @@ const Settings = () => {
         </button>
       </div>
       <h3 className="separation">Change control parameters</h3>
-      <form className="user-input">
+      <form
+        className="user-input"
+        onSubmit={(e) => {
+          e.preventDefault();
+          const payload = JSON.stringify(userParam);
+          publish(payload);
+        }}
+      >
         <div className="individual">
           <h4>Temperature</h4>
           <input
@@ -72,6 +95,12 @@ const Settings = () => {
             min="0"
             max="100"
             placeholder="Minimum temperature"
+            onChange={(e) =>
+              setUserParam({
+                ...userParam,
+                minTemp: parseInt(e.target.value) || threshold.minTemp,
+              })
+            }
           />
           <input
             type="number"
@@ -80,6 +109,12 @@ const Settings = () => {
             min="0"
             max="100"
             placeholder="Maximum temperature"
+            onChange={(e) =>
+              setUserParam({
+                ...userParam,
+                maxTemp: parseInt(e.target.value) || threshold.maxTemp,
+              })
+            }
           />
         </div>
 
@@ -92,6 +127,12 @@ const Settings = () => {
             min="0"
             max="100"
             placeholder="Minimum humidity"
+            onChange={(e) =>
+              setUserParam({
+                ...userParam,
+                minHumid: parseInt(e.target.value) || threshold.minHumid,
+              })
+            }
           />
           <input
             type="number"
@@ -100,6 +141,12 @@ const Settings = () => {
             min="0"
             max="100"
             placeholder="Maximum humidity"
+            onChange={(e) =>
+              setUserParam({
+                ...userParam,
+                maxHumid: parseInt(e.target.value) || threshold.maxHumid,
+              })
+            }
           />
         </div>
 
@@ -112,6 +159,12 @@ const Settings = () => {
             min="0"
             max="100"
             placeholder="Minimum moisture"
+            onChange={(e) =>
+              setUserParam({
+                ...userParam,
+                minMoist: parseInt(e.target.value) || threshold.minMoist,
+              })
+            }
           />
           <input
             type="number"
@@ -120,10 +173,16 @@ const Settings = () => {
             min="0"
             max="100"
             placeholder="Maximum moisture"
+            onChange={(e) =>
+              setUserParam({
+                ...userParam,
+                maxMoist: parseInt(e.target.value) || threshold.maxMoist,
+              })
+            }
           />
         </div>
 
-        <input type="submit" value="Submit Values" className="paramSubmit" />
+        <input type="submit" value="Publish Values" className="paramSubmit" />
       </form>
     </Layout>
   );

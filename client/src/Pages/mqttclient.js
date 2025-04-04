@@ -8,7 +8,7 @@ export const useMqttClient = (topic) => {
 
   const onConnect = (client) => {
     setConnectionStatus("Connected successfully!");
-    client.subscribe(topic);
+    if (topic) client.subscribe(topic);
     setMqttClient(client);
   };
 
@@ -33,6 +33,16 @@ export const useMqttClient = (topic) => {
     startSession({ onConnect, onFailure, onMessageArrived, onConnectionLost });
   };
 
+  const disconnect = () => {
+    if (mqttClient) {
+      mqttClient.disconnect();
+      setConnectionStatus("Disconnected successfully.");
+      setMqttClient(null);
+    } else {
+      console.error("No MQTT Client to disconnect.");
+    }
+  };
+
   const publish = (message) => {
     if (!mqttClient) {
       throw new Error("MQTT Client is not connected.");
@@ -40,5 +50,5 @@ export const useMqttClient = (topic) => {
     publishMessage(mqttClient, topic, message);
   };
 
-  return { connectionStatus, messages, connect, publish };
+  return { connectionStatus, messages, connect, publish, disconnect };
 };

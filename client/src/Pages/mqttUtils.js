@@ -44,7 +44,7 @@ export const startSession = ({
     encodeURIComponent(accessKeyId + "/" + credentialScope) +
     "&X-Amz-Date=" +
     amzdate +
-    "&X-Amz-Expires=86400" +
+    "&X-Amz-Expires=300" +
     "&X-Amz-SignedHeaders=host";
 
   const canonicalHeaders = `host:${host}\n`;
@@ -71,14 +71,13 @@ export const startSession = ({
 
   client.onMessageArrived = onMessageArrived;
   client.onConnectionLost = onConnectionLost;
-
   client.connect({
     onSuccess: () => onConnect(client),
     onFailure: (err) => onFailure(err),
     useSSL: true,
-    timeout: 3,
+    timeout: 10,
+    mqttVersion: 4,
     keepAliveInterval: 60,
-    //reconnect: true,
   });
 
   return client;
@@ -88,6 +87,7 @@ export const publishMessage = (mqttClient, topic, message) => {
   if (mqttClient && message) {
     const mqttMessage = new Message(message);
     mqttMessage.destinationName = topic;
+    mqttClient.trace = (...args) => {};
     mqttClient.send(mqttMessage);
   } else {
     throw new Error("Client not connected or message not provided.");

@@ -4,25 +4,48 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import "../styles/SettingsStyles.css";
 import { useMqttClient } from "./mqttclient";
-import threshold from "../Data/threshold.json";
+import thresholds from "../Data/threshold.json";
 
 const Settings = () => {
   const topic = "ESP32_FINAL/sub";
-  const { connectionStatus, messages, connect, publish } = useMqttClient(topic);
+  const { connectionStatus, messages, connect, disconnect, publish } =
+    useMqttClient(topic);
+  console.log(connectionStatus);
+
   useEffect(() => {
     connect();
+
+    return () => {};
   }, []);
+  let threshold = localStorage.getItem("userThresholds") || thresholds;
 
   const [selectedPlant, setSelectedPlant] = useState("");
   const { user } = useSelector((state) => state.user);
+
   const [userParam, setUserParam] = useState({
-    minTemp: 0,
-    maxTemp: 0,
-    minHumid: 0,
-    maxHumid: 0,
-    minMoist: 0,
-    maxMoist: 0,
+    minTemp: threshold.minTemp,
+    maxTemp: threshold.maxTemp,
+    minHumid: threshold.minHumid,
+    maxHumid: threshold.maxHumid,
+    minMoist: threshold.minMoist,
+    maxMoist: threshold.maxMoist,
   });
+
+  const handleInputChange = (name, value) => {
+    const newValue =
+      isNaN(value) || value === "" ? threshold[name] : parseInt(value);
+
+    const newUserParam = {
+      ...userParam,
+      [name]: newValue,
+    };
+
+    setUserParam(newUserParam);
+
+    // Save the updated thresholds to localStorage
+    const payload = JSON.stringify(newUserParam);
+    localStorage.setItem("userThresholds", payload);
+  };
 
   useEffect(() => {
     if (user?.plant) {
@@ -31,8 +54,7 @@ const Settings = () => {
   }, [user?.plant]);
 
   const handleSelectionChange = (e) => {
-    const newPlant = e.target.value;
-    setSelectedPlant(newPlant);
+    setSelectedPlant(e.target.value);
   };
 
   const handleSaveChanges = () => {
@@ -43,12 +65,8 @@ const Settings = () => {
   const updateUserModel = (newPlant) => {
     axios
       .put("/api/v1/user/updatePlant", { plant: newPlant, userId: user._id })
-      .then((response) => {
-        console.log("Success:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+      .then((response) => console.log("Success:", response.data))
+      .catch((error) => console.error("Error:", error));
   };
 
   return (
@@ -77,12 +95,16 @@ const Settings = () => {
           Save Changes
         </button>
       </div>
+
       <h3 className="separation">Change control parameters</h3>
       <form
         className="user-input"
         onSubmit={(e) => {
-          e.preventDefault();
+          e.preventDefault(); // Prevent page reload
+
           const payload = JSON.stringify(userParam);
+          localStorage.setItem("userThresholds", payload);
+          console.log("Publishing payload:", payload); // Debugging
           publish(payload);
         }}
       >
@@ -90,31 +112,19 @@ const Settings = () => {
           <h4>Temperature</h4>
           <input
             type="number"
-            id="minTemp"
             name="minTemp"
             min="0"
             max="100"
             placeholder="Minimum temperature"
-            onChange={(e) =>
-              setUserParam({
-                ...userParam,
-                minTemp: parseInt(e.target.value) || threshold.minTemp,
-              })
-            }
+            onChange={(e) => handleInputChange("minTemp", e.target.value)}
           />
           <input
             type="number"
-            id="maxTemp"
             name="maxTemp"
             min="0"
             max="100"
             placeholder="Maximum temperature"
-            onChange={(e) =>
-              setUserParam({
-                ...userParam,
-                maxTemp: parseInt(e.target.value) || threshold.maxTemp,
-              })
-            }
+            onChange={(e) => handleInputChange("maxTemp", e.target.value)}
           />
         </div>
 
@@ -122,31 +132,19 @@ const Settings = () => {
           <h4>Humidity</h4>
           <input
             type="number"
-            id="minHumid"
             name="minHumid"
             min="0"
             max="100"
             placeholder="Minimum humidity"
-            onChange={(e) =>
-              setUserParam({
-                ...userParam,
-                minHumid: parseInt(e.target.value) || threshold.minHumid,
-              })
-            }
+            onChange={(e) => handleInputChange("minHumid", e.target.value)}
           />
           <input
             type="number"
-            id="maxHumid"
             name="maxHumid"
             min="0"
             max="100"
             placeholder="Maximum humidity"
-            onChange={(e) =>
-              setUserParam({
-                ...userParam,
-                maxHumid: parseInt(e.target.value) || threshold.maxHumid,
-              })
-            }
+            onChange={(e) => handleInputChange("maxHumid", e.target.value)}
           />
         </div>
 
@@ -154,31 +152,19 @@ const Settings = () => {
           <h4>Soil Moisture</h4>
           <input
             type="number"
-            id="minMoist"
             name="minMoist"
             min="0"
             max="100"
             placeholder="Minimum moisture"
-            onChange={(e) =>
-              setUserParam({
-                ...userParam,
-                minMoist: parseInt(e.target.value) || threshold.minMoist,
-              })
-            }
+            onChange={(e) => handleInputChange("minMoist", e.target.value)}
           />
           <input
             type="number"
-            id="maxMoist"
             name="maxMoist"
             min="0"
             max="100"
             placeholder="Maximum moisture"
-            onChange={(e) =>
-              setUserParam({
-                ...userParam,
-                maxMoist: parseInt(e.target.value) || threshold.maxMoist,
-              })
-            }
+            onChange={(e) => handleInputChange("maxMoist", e.target.value)}
           />
         </div>
 

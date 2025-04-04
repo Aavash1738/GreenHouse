@@ -77,6 +77,8 @@ export const startSession = ({
     onFailure: (err) => onFailure(err),
     useSSL: true,
     timeout: 3,
+    keepAliveInterval: 60,
+    //reconnect: true,
   });
 
   return client;

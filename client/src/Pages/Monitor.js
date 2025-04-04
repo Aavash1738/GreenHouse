@@ -286,9 +286,9 @@ const Monitor = () => {
 
   useEffect(() => {
     AWS.config.update({
-      region: "regionalValue",
-      accessKeyId: "AccessKeyValue",
-      secretAccessKey: "SecretAccessKeyValue",
+      region: process.env.REACT_APP_AWS_REGION,
+      accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
     });
 
     const dynamoDB = new AWS.DynamoDB.DocumentClient();

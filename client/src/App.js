@@ -11,7 +11,6 @@ import Users from "./Pages/adminview/Users";
 import AdminHomePage from "./Pages/adminview/AdminHomePage";
 import Weather from "./Pages/Weather";
 import Settings from "./Pages/Settings";
-import Test from "./Pages/Test";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -83,14 +82,6 @@ function App() {
               element={
                 <ProtectedRoutes>
                   <Settings />
-                </ProtectedRoutes>
-              }
-            />
-            <Route
-              path="/test"
-              element={
-                <ProtectedRoutes>
-                  <Test />
                 </ProtectedRoutes>
               }
             />

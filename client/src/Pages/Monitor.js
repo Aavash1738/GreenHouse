@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import axios from "axios";
+//import axios from "axios";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import HighchartsGauge from "highcharts/modules/solid-gauge";
@@ -11,10 +11,10 @@ import DataTable from "../components/Table";
 import _ from "lodash";
 import AWS from "aws-sdk";
 
-const main_color = "#6bbf59";
+//const main_color = "#6bbf59";
 const back_color = "#ffddff";
 const main_green = "#11FF11";
-const main_yellow = "#FFEE11";
+//const main_yellow = "#FFEE11";
 const main_red = "#FF1111";
 const main_blue = "#1111FF";
 

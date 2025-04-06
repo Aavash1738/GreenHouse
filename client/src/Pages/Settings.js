@@ -8,8 +8,7 @@ import thresholds from "../Data/threshold.json";
 
 const Settings = () => {
   const topic = "ESP32_FINAL/sub";
-  const { connectionStatus, messages, connect, disconnect, publish } =
-    useMqttClient(topic);
+  const { connectionStatus, connect, publish } = useMqttClient(topic);
   console.log(connectionStatus);
 
   useEffect(() => {

@@ -15,17 +15,18 @@ const Login = () => {
     try {
       dispatch(showLoading());
       const res = await axios.post("/api/v1/user/login", values);
-      window.location.reload();
       dispatch(hideLoading());
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("isAdmin", res.data.isAdmin);
-        message.success("Login Successfuly");
-        if (res.data.isAdmin) {
-          navigate("/admin");
-        } else {
-          navigate("/");
-        }
+        message.success("Login Successful");
+        setTimeout(() => {
+          if (res.data.isAdmin) {
+            navigate("/admin");
+          } else {
+            navigate("/");
+          }
+        }, 500);
       } else {
         message.error(res.data.message);
       }
@@ -33,6 +34,7 @@ const Login = () => {
       dispatch(hideLoading());
       console.log(error);
       message.error("Something went wrong");
+      setTimeout(() => {}, 500);
     }
   };
 

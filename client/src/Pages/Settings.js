@@ -16,19 +16,12 @@ const Settings = () => {
 
     return () => {};
   }, []);
-  let threshold = localStorage.getItem("userThresholds") || thresholds;
-
+  let threshold =
+    JSON.parse(localStorage.getItem("userThresholds")) || thresholds["default"];
   const [selectedPlant, setSelectedPlant] = useState("");
   const { user } = useSelector((state) => state.user);
 
-  const [userParam, setUserParam] = useState({
-    minTemp: threshold.minTemp,
-    maxTemp: threshold.maxTemp,
-    minHumid: threshold.minHumid,
-    maxHumid: threshold.maxHumid,
-    minMoist: threshold.minMoist,
-    maxMoist: threshold.maxMoist,
-  });
+  const [userParam, setUserParam] = useState(threshold);
 
   const handleInputChange = (name, value) => {
     const newValue =
@@ -49,15 +42,30 @@ const Settings = () => {
   useEffect(() => {
     if (user?.plant) {
       setSelectedPlant(user.plant);
+      const savedThresholds = JSON.parse(
+        localStorage.getItem("userThresholds")
+      );
+      const defaultThreshold = thresholds[user.plant] || thresholds["default"];
+      setUserParam(savedThresholds || defaultThreshold);
     }
   }, [user?.plant]);
 
   const handleSelectionChange = (e) => {
-    setSelectedPlant(e.target.value);
+    const newPlant = e.target.value;
+    setSelectedPlant(newPlant);
+
+    const newParams = thresholds[newPlant];
+    if (newParams) {
+      setUserParam(newParams);
+      localStorage.setItem("userThresholds", JSON.stringify(newParams));
+    }
   };
 
   const handleSaveChanges = () => {
     updateUserModel(selectedPlant);
+    const payload = JSON.stringify(userParam);
+    console.log("Publishing payload:", payload); // Debugging
+    publish(payload);
     window.location.reload();
   };
 
@@ -112,6 +120,7 @@ const Settings = () => {
           <input
             type="number"
             name="minTemp"
+            value={userParam.minTemp}
             min="0"
             max="100"
             placeholder="Minimum temperature"
@@ -120,6 +129,7 @@ const Settings = () => {
           <input
             type="number"
             name="maxTemp"
+            value={userParam.maxTemp}
             min="0"
             max="100"
             placeholder="Maximum temperature"
@@ -132,6 +142,7 @@ const Settings = () => {
           <input
             type="number"
             name="minHumid"
+            value={userParam.minHumid}
             min="0"
             max="100"
             placeholder="Minimum humidity"
@@ -140,6 +151,7 @@ const Settings = () => {
           <input
             type="number"
             name="maxHumid"
+            value={userParam.maxHumid}
             min="0"
             max="100"
             placeholder="Maximum humidity"
@@ -152,6 +164,7 @@ const Settings = () => {
           <input
             type="number"
             name="minMoist"
+            value={userParam.minMoist}
             min="0"
             max="100"
             placeholder="Minimum moisture"
@@ -160,6 +173,7 @@ const Settings = () => {
           <input
             type="number"
             name="maxMoist"
+            value={userParam.maxMoist}
             min="0"
             max="100"
             placeholder="Maximum moisture"

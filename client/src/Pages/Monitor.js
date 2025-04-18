@@ -23,6 +23,7 @@ HighchartsGauge(Highcharts);
 
 const Monitor = () => {
   const { user } = useSelector((state) => state.user);
+  const threshold = JSON.parse(localStorage.getItem("userThresholds"));
   const [tableData, setTableData] = useState([]);
 
   const [humArr, setHumArr] = useState([]);
@@ -56,10 +57,15 @@ const Monitor = () => {
       title: { text: "Value" },
       plotBands: [
         {
-          from: 25, // Start of the colored section
-          to: 12, // End of the colored section
+          from: threshold?.maxTemp || 25, // Start of the colored section
+          to: threshold?.minTemp || 12, // End of the colored section
           // color: "rgba(255, 126, 126, 0.3)", // Semi-transparent green
           color: "rgba(122, 255, 20, 0.5)",
+        },
+        {
+          from: 80,
+          to: 100,
+          color: "rgba(255, 0, 0, 0.7)",
         },
         ,
       ],
@@ -85,12 +91,16 @@ const Monitor = () => {
       title: { text: "Value" },
       plotBands: [
         {
-          from: 55,
-          to: 75,
+          from: threshold?.minHumid || 55,
+          to: threshold?.maxHumid || 75,
           // color: "rgba(126, 126, 255, 0.3)", // Semi-transparent blue
           color: "rgba(122, 255, 20, 0.5)",
         },
-        ,
+        {
+          from: 85,
+          to: 100,
+          color: "rgba(255, 0, 0, 0.7)",
+        },
       ],
     },
     xAxis: { categories: timeArr },
@@ -114,12 +124,16 @@ const Monitor = () => {
       title: { text: "Value" },
       plotBands: [
         {
-          from: 40,
-          to: 60,
+          from: threshold?.minMoist || 40,
+          to: threshold?.maxMoist || 60,
           // color: "rgba(126, 126, 255, 0.3)", // Semi-transparent blue
           color: "rgba(122, 255, 20, 0.5)",
         },
-        ,
+        {
+          from: 85,
+          to: 100,
+          color: "rgba(255, 0, 0, 0.7)",
+        },
       ],
     },
     xAxis: { categories: timeArr },
@@ -343,7 +357,7 @@ const Monitor = () => {
     };
 
     fetchWeatherData();
-    const intervalId = setInterval(fetchWeatherData, 10000); // Polling every 10 seconds
+    const intervalId = setInterval(fetchWeatherData, 60000); // Polling every 10 seconds
     return () => clearInterval(intervalId);
   }, []);
 

@@ -1,8 +1,82 @@
 {
-  "minTemp": 26,
-  "maxTemp": 30,
-  "minHumid": 40,
-  "maxHumid": 60,
-  "minMoist": 20,
-  "maxMoist": 80
+  "default": {
+    "minTemp": 18,
+    "maxTemp": 28,
+    "minHumid": 40,
+    "maxHumid": 75,
+    "minMoist": 40,
+    "maxMoist": 80
+  },
+  "tomatoes": {
+    "minTemp": 18,
+    "maxTemp": 26,
+    "minHumid": 60,
+    "maxHumid": 80,
+    "minMoist": 40,
+    "maxMoist": 70
+  },
+  "lettuce": {
+    "minTemp": 10,
+    "maxTemp": 20,
+    "minHumid": 50,
+    "maxHumid": 70,
+    "minMoist": 30,
+    "maxMoist": 60
+  },
+  "pepper": {
+    "minTemp": 20,
+    "maxTemp": 30,
+    "minHumid": 60,
+    "maxHumid": 80,
+    "minMoist": 40,
+    "maxMoist": 70
+  },
+  "cucumber": {
+    "minTemp": 18,
+    "maxTemp": 24,
+    "minHumid": 60,
+    "maxHumid": 80,
+    "minMoist": 40,
+    "maxMoist": 70
+  },
+  "peas": {
+    "minTemp": 13,
+    "maxTemp": 21,
+    "minHumid": 50,
+    "maxHumid": 70,
+    "minMoist": 30,
+    "maxMoist": 60
+  },
+  "eggplant": {
+    "minTemp": 21,
+    "maxTemp": 29,
+    "minHumid": 60,
+    "maxHumid": 80,
+    "minMoist": 40,
+    "maxMoist": 70
+  },
+  "strawberry": {
+    "minTemp": 15,
+    "maxTemp": 25,
+    "minHumid": 60,
+    "maxHumid": 80,
+    "minMoist": 40,
+    "maxMoist": 70
+  },
+  "saffron": {
+    "minTemp": 10,
+    "maxTemp": 20,
+    "minHumid": 30,
+    "maxHumid": 50,
+    "minMoist": 30,
+    "maxMoist": 50
+  },
+  "asparagus": {
+    "minTemp": 18,
+    "maxTemp": 24,
+    "minHumid": 50,
+    "maxHumid": 70,
+    "minMoist": 30,
+    "maxMoist": 60
+  }
 }

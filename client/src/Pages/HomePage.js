@@ -3,6 +3,7 @@ import axios from "axios";
 import Layout from "./../components/Layout";
 import { useSelector } from "react-redux";
 import AWS from "aws-sdk";
+import { message } from "antd";
 
 const HomePage = () => {
   // Define state for temperature, humidity, and timestamps
@@ -51,9 +52,10 @@ const HomePage = () => {
     const getWeather = async () => {
       try {
         const params = {
-          TableName: "GreenData",
+          TableName: "Individual_tests",
           Key: {
-            DeviceID: "Latest",
+            //DeviceID: "Latest",
+            Username: user?.name,
           },
         };
 
@@ -89,6 +91,11 @@ const HomePage = () => {
           vents: false,
         });
       } catch (error) {
+        message.error({
+          content:
+            "The user doesn't have a registerd setup, please contact admin.",
+          duration: 5, // in seconds
+        });
         console.log(error);
       }
     };

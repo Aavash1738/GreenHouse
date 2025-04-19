@@ -310,11 +310,13 @@ const Monitor = () => {
     const fetchWeatherData = async () => {
       try {
         const params = {
-          TableName: "GreenData",
+          TableName: "Individual_tests",
           Key: {
-            DeviceID: "Latest",
+            //DeviceID: "Latest",
+            Username: user?.name,
           },
         };
+        console.log(params);
 
         const response = await dynamoDB.get(params).promise();
         console.log(response);
@@ -352,6 +354,11 @@ const Monitor = () => {
           date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         setTimeArr((prev) => [...prev, String(setup)]);
       } catch (error) {
+        message.error({
+          content:
+            "The user doesn't have a registerd setup, please contact admin.",
+          duration: 5, // in seconds
+        });
         console.error("Error fetching data", error);
       }
     };

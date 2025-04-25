@@ -103,7 +103,7 @@ const HomePage = () => {
     getUserData();
     if (user?.name) {
       getWeather();
-      const interval = setInterval(getWeather, 10000);
+      const interval = setInterval(getWeather, 10000); //Polling duration
 
       return () => clearInterval(interval);
     }

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-//import axios from "axios";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import HighchartsGauge from "highcharts/modules/solid-gauge";
@@ -10,6 +9,7 @@ import { useSelector } from "react-redux";
 import DataTable from "../components/Table";
 import _ from "lodash";
 import AWS from "aws-sdk";
+import { message } from "antd";
 
 //const main_color = "#6bbf59";
 const back_color = "#ffddff";
@@ -331,7 +331,7 @@ const Monitor = () => {
           fan_state,
           light_state,
           water_state,
-        } = response.Item.Data;
+        } = response.Item.Data ? response.Item.Data : response.Item.payload;
 
         setHumArr((prevData) => [...prevData, Number(humidity)].slice(-8));
         setTempArr((prevData) => [...prevData, Number(temperature)].slice(-8));
@@ -364,7 +364,7 @@ const Monitor = () => {
     };
 
     fetchWeatherData();
-    const intervalId = setInterval(fetchWeatherData, 60000); // Polling every 10 seconds
+    const intervalId = setInterval(fetchWeatherData, 10000); // Polling every 10 seconds
     return () => clearInterval(intervalId);
   }, []);
 

@@ -63,7 +63,7 @@ select {
 }
 
 input {
-  width: 250px;
+  width: 200px;
   padding: 5px;
   padding-left: 10px;
   font-size: 1.1em;
@@ -124,4 +124,32 @@ option {
 
 .settings-button:hover {
   background-color: #218838;
+}
+
+@media (max-width: 768px) {
+  .individual {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    padding-left: 10px;
+    padding-right: 2px;
+  }
+
+  .individual > span {
+    text-align: center;
+    display: none;
+  }
+
+  .individual > h4 {
+    width: 5rem;
+    font-size: small;
+    text-align: center;
+    margin-top: 3px;
+    display: inline;
+  }
+
+  .individual input {
+    width: 25%;
+  }
 }

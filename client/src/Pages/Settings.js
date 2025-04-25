@@ -5,6 +5,7 @@ import axios from "axios";
 import "../styles/SettingsStyles.css";
 import { useMqttClient } from "./mqttclient";
 import thresholds from "../Data/threshold.json";
+import TogglePanel from "../components/Toggle";
 
 const Settings = () => {
   const topic = "ESP32_FINAL/sub";
@@ -69,6 +70,10 @@ const Settings = () => {
     window.location.reload();
   };
 
+  const purePublish = (value) => {
+    publish(JSON.stringify(value));
+    console.log("Child published");
+  };
   const updateUserModel = (newPlant) => {
     axios
       .put("/api/v1/user/updatePlant", { plant: newPlant, userId: user._id })
@@ -123,13 +128,16 @@ const Settings = () => {
             value={userParam.minTemp}
             min="0"
             max="100"
+            title="Enter minimum temperature value"
             placeholder="Minimum temperature"
             onChange={(e) => handleInputChange("minTemp", e.target.value)}
           />
+          <span>to</span>
           <input
             type="number"
             name="maxTemp"
             value={userParam.maxTemp}
+            title="Enter maximum temperature value"
             min="0"
             max="100"
             placeholder="Maximum temperature"
@@ -143,17 +151,20 @@ const Settings = () => {
             type="number"
             name="minHumid"
             value={userParam.minHumid}
+            title="Enter minimum humidity value"
             min="0"
             max="100"
             placeholder="Minimum humidity"
             onChange={(e) => handleInputChange("minHumid", e.target.value)}
           />
+          <span>to</span>
           <input
             type="number"
             name="maxHumid"
             value={userParam.maxHumid}
             min="0"
             max="100"
+            title="Enter maximum humidity value"
             placeholder="Maximum humidity"
             onChange={(e) => handleInputChange("maxHumid", e.target.value)}
           />
@@ -165,17 +176,20 @@ const Settings = () => {
             type="number"
             name="minMoist"
             value={userParam.minMoist}
+            title="Enter minimum moisture value"
             min="0"
             max="100"
             placeholder="Minimum moisture"
             onChange={(e) => handleInputChange("minMoist", e.target.value)}
           />
+          <span>to</span>
           <input
             type="number"
             name="maxMoist"
             value={userParam.maxMoist}
             min="0"
             max="100"
+            title="Enter maximum moisture value"
             placeholder="Maximum moisture"
             onChange={(e) => handleInputChange("maxMoist", e.target.value)}
           />
@@ -183,6 +197,7 @@ const Settings = () => {
 
         <input type="submit" value="Publish Values" className="paramSubmit" />
       </form>
+      <TogglePanel publish={purePublish} />
     </Layout>
   );
 };

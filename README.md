@@ -74,8 +74,6 @@ Make necessary changes, such as configurting your IoT endpoint, Wi-Fi credential
 
 Register your ESP32 as a device on IoT Core to get access to specific certificates.
 
----
-
 ### 5. Check the interface on your browser.
 
 ```bash
@@ -83,3 +81,35 @@ http://localhost:3000/
 OR
 http://localhost:8080/
 ```
+
+---
+
+## User Interface
+
+### Login/Register Page
+
+The user first registers themselves, which sets up their architecture for them. After this, they have to manually register their ESP as a thing. Completing this will deem the system functional.
+
+![Login/Register Page](images/Login_desktop.PNG)
+
+### Home Page
+
+After registering, the user can log in to their web console. The user is welcomed to their home page, which provides a brief description of their plant care status.
+
+![Home Page for Users](images/home_console.PNG)
+
+### Monitor Page
+
+The user can also choose to view real time data instead, which is available in the "Monitor" page.
+
+![Real time Monitoring](images/monitor_console.PNG)
+
+### Settings Page
+
+Finally, the user can choose to override automated settings to manually trigger lights, pumps, or ventilation.
+
+![Setting Page](images/settings_console.PNG)
+
+As a precaution, we have implemented a timer to turn off the motor after 10 seconds of operation to prevent overflow. This value can be altered to best fit the user.
+
+---
